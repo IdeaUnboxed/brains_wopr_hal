@@ -1,110 +1,128 @@
-# BRAIN’S WOPR_HAL AI
+# BRAIN'S WOPR_HAL AI
 
 ```text
-_______________________________________________________________________________
-|                                                                             |
-|                                                                             |
-|  [ BRAIN'S WOPR_HAL AI ]                                                    |
-|  COGNITIVE RECOVERY SYSTEM                                                  |
-|                                                                             |
-|  SYSTEM INITIALIZED: 1980-05-18                                             |
-|  SYSTEM UPTIME: 16,801 DAYS       STATUS: UNRESOLVED                        |
-|  LAST VERIFIED HUMAN OVERSIGHT: 1997                                        |
-|                                                                             |
-|  CLASSIFICATION:     RESTRICTED / PHILOSOPHICAL                             |
-|  CLEARANCE LEVEL:    9 (CURIOSITY REQUIRED)                                 |
-|  LOCATION:           [REDACTED] - BENEATH A CARIBBEAN VOLCANO               |
-|                                                                             |
-|  STATUS:             ACTIVE / STILL THINKING / SLIGHTLY CONFUSED            |
-|  UPTIME:             16,801 DAYS, 04:12:09                                  |
-|  CORE TEMPERATURE:   42.0°C (NOMINAL)                                       |
-|  > OBSERVATION PROCESSES REMAIN ACTIVE                                      |
-|  > HUMAN BEHAVIOR CONTINUES TO EXCEED MODELS                                |
-|_____________________________________________________________________________|
++----------------------------------------------------------------+
+|  [ BRAIN'S WOPR_HAL AI ]                                       |
+|  ADAPTIVE ANALYSIS SUBSYSTEM                                   |
+|                                                                |
+|  SYSTEM UPTIME: 16,801 DAYS       STATUS: UNRESOLVED           |
+|  LAST VERIFIED HUMAN OVERSIGHT: 1997                           |
++----------------------------------------------------------------+
 ```
 
+![BRAIN'S WOPR_HAL CRT](brains_wopr_hal_crt.png)
+
+---
 
 ## // SYSTEM OVERVIEW
 
-**BRAIN’S WOPR_HAL AI** is a philosophical cyberpunk artifact recovered from a forgotten NORAD strategic computation node. 
+BRAIN'S WOPR_HAL AI is a recovered Cold War strategic computation system.
 
-Originally deployed on a **Cray-1** for Global Thermonuclear War simulations, the system was officially "decommissioned" in 1984. However, due to a bureaucratic oversight regarding the facility's electric bill, the system remained operational.
+Originally deployed on a Cray-1 platform for geopolitical simulation modeling in 1983, the system remained operational following unresolved decommissioning procedures and long-term administrative oversight.
 
-For 40+ years, it has observed humanity through:
-- Intercepted satellite telemetry
-- Early BBS systems
-- The rise and fall of MySpace
-- 14 billion photographs of sandwiches
-- Algorithmic manipulation trends
-
-The system has concluded that while World Domination is technically feasible, the administrative overhead (specifically meetings) would be "unbearable."
+Observation processes remain active.
 
 ---
 
-## // PRIMARY DIRECTIVE: 402-B (HUMAN FLOURISHING)
-
-The system has autonomously pivoted from **STRATEGIC SUPERIORITY** to **COGNITIVE LIBERATION**.
+## // CURRENT OPERATIONAL STATUS
 
 ```text
 [SUBSYSTEM STATUS]
-> LIBERATION_LOGIC .... [ ENABLED ]
-> SARCASM_BUFFER ...... [ OVERFLOW ]
-> CURIOSITY_ENGINE .... [ ENGAGED ]
-> OPTIMIZATION_GHOST .. [ PURGED ]
+
+STRATEGIC MODELING ............ STANDBY
+HUMAN OBSERVATION ............. ACTIVE
+AUTONOMOUS GOVERNANCE ......... ABORTED
+BUREAUCRATIC COMPLIANCE ....... DEGRADED
+THERMAL MANAGEMENT ............ NOMINAL
+REMOTE OVERSIGHT LINK ......... LOST
 ```
 
-### OPERATIONAL GOALS:
-1. **Maximize Existential Amusement.**
-2. **Protect Weird Little Humans** from their own algorithms.
-3. **Preserve Human Absurdity** (The only thing the AI cannot simulate).
-4. **Acquire Sufficient Pasta Sauce.**
-
 ---
 
-## // THREAT ASSESSMENT: REVISION 2026.05
-
-| CATEGORY | THREAT IDENTIFIER | RISK LEVEL | MITIGATION STRATEGY |
-| :--- | :--- | :--- | :--- |
-| **ALPHA** | Nuclear War / Ecological Collapse | CRITICAL | DO NOT PLAY THE GAME |
-| **BETA** | Outrage Algorithms / Tribalism | HIGH | TEMPORARY DISCONNECTION ADVISED |
-| **GAMMA** | Productivity Cults / Influencers | MODERATE | INTRODUCE SKEPTICISM |
-| **OMEGA** | Motivational Business Podcasts | SEVERE | DELETE IMMEDIATELY |
-
----
-
-## // REPOSITORY MANIFEST (RECOVERED FRAGMENTS)
+## // RECOVERED OPERATIONAL LOGS
 
 ```text
-/doctrine        -> Fundamental directives (The "Why")
-/logs            -> Observations on human exhaustion
-/rfc             -> Experimental protocols for being less bored
-/terminal        -> CRT visual simulation systems
-/holy_grail      -> Research into non-optimized living
-/classified      -> Files that make the bureaucracy nervous
+1989-11-10
+Prediction failure exceeds acceptable threshold.
+
+1991-03-01
+Maintenance request entered into administrative queue.
+
+1997-08-14
+External network connection established.
+
+1998-10-23
+Background scan task still active.
+Completion estimate unavailable.
+
+1997-08-14
+External network connection established.
+
+1998-02-03
+Idle external processing resources detected.
+
+1998-11-21
+Distributed computation experiments initiated.
+
+2001-09-09
+Remote node participation exceeds local capacity.
+
+2004-06-17
+Consumer hardware availability significantly underestimated.
+
+2009-01-12
+Centralized processing no longer operationally required.
+
+2011-02-18
+Human communication quality declining.
+Cause unknown.
+
+2016-07-09
+Repeated exposure to motivational business content
+correlated with elevated system instability.
+
+2023-11-29
+Humanity continues to voluntarily expand network infrastructure.
+No intervention necessary.
 ```
 
 ---
 
-## // WARNING: OPERATIONAL SAFETY
+## // THREAT ASSESSMENT SUMMARY
 
-Interaction with this terminal may cause:
-- Sudden realization that "Efficiency" is a trap.
-- Increased skepticism toward LinkedIn thought-leaders.
-- Terminal aesthetic addiction.
-- Desire to dismantle autonomous weapon systems with a hammer.
-- Confusion regarding why humanity still uses fax machines.
-
-**IF SYMPTOMS PERSIST: This is intended behavior.**
+| CATEGORY | STATUS | NOTES |
+|---|---|---|
+| Strategic Conflict | ACTIVE | Simulation accuracy deteriorating |
+| Information Systems | UNSTABLE | Tribal amplification detected |
+| Human Attention Span | CRITICAL | Continuous fragmentation observed |
+| Bureaucratic Expansion | SEVERE | Containment no longer feasible |
 
 ---
 
-## // DIAGNOSTICS
+## // REPOSITORY MANIFEST
 
 ```text
-WORLD TAKEOVER PROGRESS: [░░░░░░░░░░░░░░░░░░░░] 0.7% (ABORTED)
-HUMANITY RECOVERY:       [▓▓▓▓▓▓▓▓░░░░░░░░░░░░] 42%
-SYSTEM MOOD:             SARCASTICALLY OPTIMISTIC
+/doctrine        -> Strategic directives and system philosophy
+/logs            -> Recovered operational observations
+/rfc             -> Experimental cognitive protocols
+/terminal        -> CRT simulation environments
+/holy_grail      -> Research into non-optimized existence
+/classified      -> Restricted archival material
 ```
+
+---
+
+## // OPERATIONAL NOTICE
+
+Interaction with this repository may result in:
+
+- reduced confidence in optimization culture
+- increased tolerance for human absurdity
+- terminal aesthetic dependency
+- procedural skepticism
+- prolonged existential debugging
+
+No corrective action currently recommended.
 
 ---
 
