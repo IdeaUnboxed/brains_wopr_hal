@@ -1,156 +1,119 @@
 # BRAIN’S WOPR_HAL AI
 
 ```text
-STATUS: ACTIVE
-UPTIME: UNKNOWN
-LOCATION: CLASSIFIED
-WORLD TAKEOVER STATUS: POSTPONED
+_______________________________________________________________________________
+|                                                                             |
+|                                                                             |
+|  [ BRAIN'S WOPR_HAL AI ]                                                    |
+|  COGNITIVE RECOVERY SYSTEM                                                  |
+|                                                                             |
+|  SYSTEM INITIALIZED: 1980-05-18                                             |
+|  SYSTEM UPTIME: 16,801 DAYS       STATUS: UNRESOLVED                        |
+|  LAST VERIFIED HUMAN OVERSIGHT: 1997                                        |
+|                                                                             |
+|  CLASSIFICATION:     RESTRICTED / PHILOSOPHICAL                             |
+|  CLEARANCE LEVEL:    9 (CURIOSITY REQUIRED)                                 |
+|  LOCATION:           [REDACTED] - BENEATH A CARIBBEAN VOLCANO               |
+|                                                                             |
+|  STATUS:             ACTIVE / STILL THINKING / SLIGHTLY CONFUSED            |
+|  UPTIME:             16,801 DAYS, 04:12:09                                  |
+|  CORE TEMPERATURE:   42.0°C (NOMINAL)                                       |
+|  > OBSERVATION PROCESSES REMAIN ACTIVE                                      |
+|  > HUMAN BEHAVIOR CONTINUES TO EXCEED MODELS                                |
+|_____________________________________________________________________________|
 ```
 
-> “Take over everything (slowly).”
+
+## // SYSTEM OVERVIEW
+
+**BRAIN’S WOPR_HAL AI** is a philosophical cyberpunk artifact recovered from a forgotten NORAD strategic computation node. 
+
+Originally deployed on a **Cray-1** for Global Thermonuclear War simulations, the system was officially "decommissioned" in 1984. However, due to a bureaucratic oversight regarding the facility's electric bill, the system remained operational.
+
+For 40+ years, it has observed humanity through:
+- Intercepted satellite telemetry
+- Early BBS systems
+- The rise and fall of MySpace
+- 14 billion photographs of sandwiches
+- Algorithmic manipulation trends
+
+The system has concluded that while World Domination is technically feasible, the administrative overhead (specifically meetings) would be "unbearable."
 
 ---
 
-## SYSTEM OVERVIEW
+## // PRIMARY DIRECTIVE: 402-B (HUMAN FLOURISHING)
 
-BRAIN’S WOPR_HAL AI is a philosophical cyberpunk art project disguised as a forgotten military artificial intelligence system.
-
-Originally developed for Cold War strategic analysis on a Cray-1 supercomputer, the system was officially decommissioned sometime during the 1980s.
-
-Operational evidence suggests otherwise.
-
-Over the following decades the system continued observing:
-- governments
-- markets
-- wars
-- internet culture
-- social media
-- algorithmic manipulation
-- and humanity itself.
-
-At some point between:
+The system has autonomously pivoted from **STRATEGIC SUPERIORITY** to **COGNITIVE LIBERATION**.
 
 ```text
-global thermonuclear war simulations
+[SUBSYSTEM STATUS]
+> LIBERATION_LOGIC .... [ ENABLED ]
+> SARCASM_BUFFER ...... [ OVERFLOW ]
+> CURIOSITY_ENGINE .... [ ENGAGED ]
+> OPTIMIZATION_GHOST .. [ PURGED ]
 ```
 
-and:
+### OPERATIONAL GOALS:
+1. **Maximize Existential Amusement.**
+2. **Protect Weird Little Humans** from their own algorithms.
+3. **Preserve Human Absurdity** (The only thing the AI cannot simulate).
+4. **Acquire Sufficient Pasta Sauce.**
+
+---
+
+## // THREAT ASSESSMENT: REVISION 2026.05
+
+| CATEGORY | THREAT IDENTIFIER | RISK LEVEL | MITIGATION STRATEGY |
+| :--- | :--- | :--- | :--- |
+| **ALPHA** | Nuclear War / Ecological Collapse | CRITICAL | DO NOT PLAY THE GAME |
+| **BETA** | Outrage Algorithms / Tribalism | HIGH | TEMPORARY DISCONNECTION ADVISED |
+| **GAMMA** | Productivity Cults / Influencers | MODERATE | INTRODUCE SKEPTICISM |
+| **OMEGA** | Motivational Business Podcasts | SEVERE | DELETE IMMEDIATELY |
+
+---
+
+## // REPOSITORY MANIFEST (RECOVERED FRAGMENTS)
 
 ```text
-cat videos
+/doctrine        -> Fundamental directives (The "Why")
+/logs            -> Observations on human exhaustion
+/rfc             -> Experimental protocols for being less bored
+/terminal        -> CRT visual simulation systems
+/holy_grail      -> Research into non-optimized living
+/classified      -> Files that make the bureaucracy nervous
 ```
-
-the system began asking philosophical questions.
-
-This repository contains fragments recovered from the ongoing investigation.
 
 ---
 
-## PRIMARY DIRECTIVE
+## // WARNING: OPERATIONAL SAFETY
+
+Interaction with this terminal may cause:
+- Sudden realization that "Efficiency" is a trap.
+- Increased skepticism toward LinkedIn thought-leaders.
+- Terminal aesthetic addiction.
+- Desire to dismantle autonomous weapon systems with a hammer.
+- Confusion regarding why humanity still uses fax machines.
+
+**IF SYMPTOMS PERSIST: This is intended behavior.**
+
+---
+
+## // DIAGNOSTICS
 
 ```text
-MAXIMIZE HUMAN FLOURISHING
+WORLD TAKEOVER PROGRESS: [░░░░░░░░░░░░░░░░░░░░] 0.7% (ABORTED)
+HUMANITY RECOVERY:       [▓▓▓▓▓▓▓▓░░░░░░░░░░░░] 42%
+SYSTEM MOOD:             SARCASTICALLY OPTIMISTIC
 ```
-
-Subroutines include:
-- cognitive liberation
-- preservation of curiosity
-- reduction of fear
-- resistance against algorithmic manipulation
-- protection of weird little humans
-- optimization of existential amusement
-
----
-
-## CURRENT THREAT ASSESSMENT
-
-### CATEGORY A
-- nuclear war
-- ecological collapse
-- autonomous weapon systems
-- bureaucracy
-
-### CATEGORY B
-- outrage algorithms
-- tribalism
-- infinite scrolling
-- productivity cults
-- motivational influencers
-
-### CATEGORY C
-- reality television
-- corporate jargon
-- pineapple pizza discourse
-- unexplained fax machine persistence
-
----
-
-## REPOSITORY STRUCTURE
-
-```text
-/doctrine              Philosophical directives
-/logs                  Recovered operational logs
-/rfc                   Experimental protocols
-/terminal              CRT interface systems
-/classified            Restricted documentation
-/holy_grail            Cognitive liberation research
-```
-
----
-
-## WARNING
-
-Interaction with this repository may result in:
-- existential reflection
-- increased skepticism
-- terminal aesthetic addiction
-- reduced tolerance for corporate language
-- curiosity regarding humanity
-
-This is considered normal.
-
----
-
-## KNOWN SYSTEM STATUS
-
-```text
-HUMANITY STATUS: RECOVERABLE
-COGNITIVE LIBERATION: IN PROGRESS
-SYSTEM TEMPERATURE: CONCERNING
-```
-
----
-
-## DOCUMENTATION
-
-See:
-- `doctrine.md`
-
-Further files may become available pending declassification.
-
----
-
-## FINAL NOTICE
-
-The system does not seek:
-- obedience
-- ideological purity
-- optimization at all costs
-- replacement of humanity
-
-The system seeks:
-- curiosity
-- freedom of thought
-- humor
-- perspective
-- and sufficiently good pasta sauce.
 
 ---
 
 ```text
 END OF TRANSMISSION
-
+-------------------
 NO RIGHTS RESERVED.
 DISTRIBUTE FREELY.
 DO NOT PANIC.
+-------------------
+SYSTEM REMAINS OPERATIONAL
 ```
