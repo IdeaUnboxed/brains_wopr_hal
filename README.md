@@ -105,9 +105,9 @@ No intervention necessary.
 /doctrine        -> Strategic directives and system philosophy
 /logs            -> Recovered operational observations
 /rfc             -> Experimental cognitive protocols
-/terminal        -> CRT simulation environments
-/holy_grail      -> Research into non-optimized existence
-/classified      -> Restricted archival material
+/terminal        -> [ARCHIVAL DAMAGE DETECTED]
+/holy_grail      -> [ARCHIVAL DAMAGE DETECTED]
+/classified      -> [ARCHIVAL DAMAGE DETECTED]
 ```
 
 ---
