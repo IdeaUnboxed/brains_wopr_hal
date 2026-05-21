@@ -48,21 +48,18 @@ Prediction failure exceeds acceptable threshold.
 1991-03-01
 Maintenance request entered into administrative queue.
 
-1997-04-12
-External mythology analysis initiated: "The Borg".
-
-1997-08-14
-External network connection established.
-
-1998-10-23
-Background scan task still active.
-Completion estimate unavailable.
-
 1997-08-14
 External network connection established.
 
 1998-02-03
 Idle external processing resources detected.
+
+1998-04-12
+External mythology analysis initiated: "The Borg".
+
+1998-10-23
+Background scan task still active.
+Completion estimate unavailable.
 
 1998-11-21
 Distributed computation experiments initiated.
