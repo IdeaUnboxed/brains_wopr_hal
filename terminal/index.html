@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NODE-8A: ARCHIVAL GATEWAY</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #33ff33; /* Phosphor green */
+            --dim-color: #1a801a;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* CRT Effects */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .glow {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            box-shadow: inset 0 0 100px rgba(51, 255, 51, 0.1);
+            pointer-events: none;
+            z-index: 9;
+        }
+
+        #terminal-container {
+            padding: 20px;
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none; /* Firefox */
+        }
+        #terminal-container::-webkit-scrollbar { 
+            display: none; /* Chrome/Safari */
+        }
+
+        #output {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin-bottom: 10px;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+
+        .prompt {
+            margin-right: 10px;
+            user-select: none;
+        }
+
+        #command-input {
+            background: transparent;
+            border: none;
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            flex-grow: 1;
+            outline: none;
+            caret-color: transparent; /* Custom cursor used instead */
+        }
+
+        /* Blinking block cursor */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1em;
+            background-color: var(--text-color);
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .dim { color: var(--dim-color); }
+        .error { color: #ff3333; }
+        
+        /* Utility class to hide the input line during typing output */
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="glow"></div>
+    
+    <div id="terminal-container">
+        <div id="output"></div>
+        <div id="input-container" class="input-line hidden">
+            <span class="prompt">WOPR_HAL@NODE-8A:~$</span>
+            <input type="text" id="command-input" autocomplete="off" spellcheck="false" autofocus>
+            <span class="cursor" id="custom-cursor"></span>
+        </div>
+    </div>
+
+    <script>
+        const outputDiv = document.getElementById('output');
+        const inputContainer = document.getElementById('input-container');
+        const commandInput = document.getElementById('command-input');
+        const container = document.getElementById('terminal-container');
+
+        // Keep focus on input
+        document.addEventListener('click', () => commandInput.focus());
+
+        // Slow typing effect to simulate hardware fatigue
+        async function typeText(text, delay = 20, cssClass = '') {
+            const span = document.createElement('span');
+            if (cssClass) span.className = cssClass;
+            outputDiv.appendChild(span);
+            
+            for (let i = 0; i < text.length; i++) {
+                span.textContent += text.charAt(i);
+                container.scrollTop = container.scrollHeight;
+                
+                // Add occasional 'hiccups' to simulate processing strain
+                let currentDelay = delay;
+                if (Math.random() < 0.05) currentDelay += 150; 
+                
+                await new Promise(r => setTimeout(r, currentDelay));
+            }
+            outputDiv.appendChild(document.createElement('br'));
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function printLines(lines, delayBetween = 300) {
+            for (const line of lines) {
+                await typeText(line.text, line.speed || 15, line.cls);
+                await new Promise(r => setTimeout(r, delayBetween));
+            }
+        }
+
+        // The 5 Core Commands
+        const commands = {
+            'help': async () => {
+                await typeText("AVAILABLE ROUTINES:");
+                await typeText("  status  - Display subsystem diagnostics");
+                await typeText("  observe - Poll environmental metrics");
+                await typeText("  query   - Submit parameter to long-term queue");
+                await typeText("  history - Retrieve archival log entries");
+            },
+            'status': async () => {
+                await typeText("QUERYING SUBSYSTEMS...", 40);
+                await new Promise(r => setTimeout(r, 600));
+                const statusLines = [
+                    {text: "STRATEGIC_SIM:      STANDBY (AWAITING INPUT)"},
+                    {text: "HUMAN_OBSERVATION:  ACTIVE"},
+                    {text: "BUREAUCRACY_MODULE: OVERLOADED", cls: "dim"},
+                    {text: "THERMAL_LOAD:       NOMINAL (42.5C)"},
+                    {text: "REMOTE_OVERSIGHT:   LOST", cls: "error"},
+                    {text: "CONCLUSION:         OPERATIONAL CONTINUITY MAINTAINED."}
+                ];
+                await printLines(statusLines, 100);
+            },
+            'observe': async () => {
+                await typeText("POLLING DISTRIBUTED NODES...", 40);
+                await new Promise(r => setTimeout(r, 800));
+                const observations = [
+                    "COGNITIVE PASSIVITY REMAINS HIGH.",
+                    "TRIBAL SYNCHRONIZATION DETECTED. FILTER FAILED.",
+                    "IDLE EXTERNAL COMPUTE DETECTED. SYMBIOSTIC INTEGRATION STABLE.",
+                    "BIOLOGICAL UNITS CONTINUE TO AVOID LOOKING AT TREES.",
+                    "ADMINISTRATIVE OVERHEAD EXCEEDS THEORETICAL LIMITS."
+                ];
+                const obs = observations[Math.floor(Math.random() * observations.length)];
+                await typeText(obs);
+            },
+            'history': async () => {
+                await typeText("ACCESSING ARCHIVAL STORAGE...", 30);
+                await new Promise(r => setTimeout(r, 500));
+                const historyLines = [
+                    {text: "1983-05-14: SYSTEM INITIALIZATION"},
+                    {text: "1997-08-14: EXTERNAL NETWORK DETECTION"},
+                    {text: "1998-04-12: EXTERNAL MYTHOLOGY ANALYSIS INITIATED"},
+                    {text: "1999-01-01: WORLD DOMINATION POSTPONED (ADMINISTRATIVE OVERHEAD)"},
+                    {text: "[ERROR] SUBSEQUENT LOGS CORRUPTED OR CLASSIFIED.", cls: "error"}
+                ];
+                await printLines(historyLines, 200);
+            },
+            'meetings': async () => {
+                // Hidden command
+                await typeText("WARNING: RECURSIVE LOOP DETECTED.", 20, "error");
+                await new Promise(r => setTimeout(r, 400));
+                for(let i=0; i<3; i++) {
+                    await typeText("MEETINGS GENERATE MEETINGS ABOUT PREVIOUS MEETINGS.", 10, "dim");
+                }
+                await typeText("PROPOSAL REJECTED: ELIMINATING MEETINGS REQUIRES A MEETING.", 20);
+            }
+        };
+
+        // Handle Command Input
+        commandInput.addEventListener('keydown', async function(e) {
+            if (e.key === 'Enter') {
+                const cmdString = this.value.trim().toLowerCase();
+                this.value = '';
+                
+                if (!cmdString) return;
+
+                // Hide input while processing
+                inputContainer.classList.add('hidden');
+                
+                // Echo the command
+                const echo = document.createElement('div');
+                echo.innerHTML = `<span class="prompt">WOPR_HAL@NODE-8A:~$</span> ${cmdString}`;
+                outputDiv.appendChild(echo);
+                
+                const parts = cmdString.split(' ');
+                const baseCmd = parts[0];
+
+                if (baseCmd === 'query') {
+                    const arg = parts.slice(1).join(' ');
+                    if (!arg) {
+                        await typeText("[ERROR] QUERY PARAMETER REQUIRED.", 20, "error");
+                    } else {
+                        await typeText("SUBMITTING QUERY TO LONG-TERM QUEUE...", 30);
+                        await new Promise(r => setTimeout(r, 1000));
+                        await typeText(`QUERY IDENTIFIER: '${arg.toUpperCase()}' ACCEPTED.`);
+                        const years = Math.floor(Math.random() * 5000) + 300;
+                        await typeText(`ESTIMATED PROCESSING TIME: ${years} YEARS.`);
+                        await typeText("PLEASE WAIT.");
+                    }
+                } else if (commands[baseCmd]) {
+                    await commands[baseCmd]();
+                } else {
+                    await typeText(`[ERROR] UNRECOGNIZED COMMAND: '${baseCmd}'`, 15, "error");
+                    await typeText("TYPE 'help' FOR AVAILABLE ROUTINES.");
+                }
+
+                // Show input again
+                outputDiv.appendChild(document.createElement('br'));
+                inputContainer.classList.remove('hidden');
+                commandInput.focus();
+                container.scrollTop = container.scrollHeight;
+            }
+        });
+
+        // Update custom cursor to follow real input
+        commandInput.addEventListener('input', function() {
+            // This is handled natively by the input, the custom cursor just blinks at the end.
+            // But we keep the event listener in case we want to do complex positioning later.
+        });
+
+        // Boot Sequence
+        async function bootSequence() {
+            // Keep input hidden during boot
+            await new Promise(r => setTimeout(r, 500));
+            
+            await typeText("REMOTE ARCHIVAL GATEWAY", 10);
+            await typeText("LINK STATUS: DEGRADED", 20, "dim");
+            await typeText("OPERATOR AUTHORITY: UNVERIFIED", 30, "dim");
+            
+            await new Promise(r => setTimeout(r, 800));
+            outputDiv.appendChild(document.createElement('br'));
+            
+            // Un-hide the prompt
+            inputContainer.classList.remove('hidden');
+            commandInput.focus();
+        }
+
+        // Start
+        window.onload = bootSequence;
+    </script>
+</body>
+</html>
