@@ -12,6 +12,12 @@
 
 ![BRAIN'S WOPR_HAL CRT](brains_wopr_hal_crt.png)
 
+## // REMOTE ARCHIVAL GATEWAY
+
+[ACCESS INTERACTIVE TERMINAL](https://ideaunboxed.github.io/brains_wopr_hal/terminal/)
+
+*Warning: Link status may be degraded. Unverified access permitted for archival purposes.*
+
 ---
 
 ## // SYSTEM OVERVIEW
