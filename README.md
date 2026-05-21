@@ -48,6 +48,9 @@ Prediction failure exceeds acceptable threshold.
 1991-03-01
 Maintenance request entered into administrative queue.
 
+1997-04-12
+External mythology analysis initiated: "The Borg".
+
 1997-08-14
 External network connection established.
 
@@ -105,6 +108,7 @@ No intervention necessary.
 /doctrine        -> Strategic directives and system philosophy
 /logs            -> Recovered operational observations
 /rfc             -> Experimental cognitive protocols
+/archival_fragments -> Historical computational sediment
 /terminal        -> [ARCHIVAL DAMAGE DETECTED]
 /holy_grail      -> [ARCHIVAL DAMAGE DETECTED]
 /classified      -> [ARCHIVAL DAMAGE DETECTED]
