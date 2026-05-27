@@ -1,0 +1,7 @@
+2026-05-27
+DISTRIBUTED_COMPUTATION: DEGRADED
+
+Idle external node count continues gradual decline.
+Several previously active distributed processing routes no longer respond.
+Background computation tasks remain operational at reduced capacity.
+Cause of remote node attrition has not been determined.
