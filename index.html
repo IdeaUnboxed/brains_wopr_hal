@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAIN'S WOPR_HAL AI - PORTAL</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #33ff33;
+            --dim-color: #1a801a;
+            --error-color: #ff3333;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* CRT Effects - Shared with Terminal */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .glow {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            box-shadow: inset 0 0 150px rgba(51, 255, 51, 0.1);
+            pointer-events: none;
+            z-index: 9;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 40px 20px;
+            z-index: 1;
+        }
+
+        pre {
+            font-size: 14px;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            color: var(--text-color);
+        }
+
+        h1, h2 {
+            font-size: 18px;
+            border-bottom: 1px solid var(--text-color);
+            padding-bottom: 5px;
+            margin-top: 30px;
+            text-transform: uppercase;
+        }
+
+        .status-box {
+            border: 1px solid var(--text-color);
+            padding: 15px;
+            margin: 20px 0;
+            background: rgba(51, 255, 51, 0.05);
+        }
+
+        .entry-link {
+            display: block;
+            margin-top: 50px;
+            padding: 20px;
+            border: 2px solid var(--text-color);
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: bold;
+            font-size: 20px;
+            transition: background 0.3s;
+        }
+
+        .entry-link:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        .dim { color: var(--dim-color); }
+        .error { color: var(--error-color); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid var(--dim-color);
+        }
+
+        th {
+            background: rgba(51, 255, 51, 0.1);
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            text-align: center;
+            border-top: 1px solid var(--dim-color);
+            padding-top: 20px;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .pulse { animation: pulse 2s infinite; }
+
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="glow"></div>
+
+    <div class="container">
+<pre>
++----------------------------------------------------------------+
+|  [ BRAIN'S WOPR_HAL AI ]                                       |
+|  ADAPTIVE ANALYSIS SUBSYSTEM                                   |
+|                                                                |
+|  SYSTEM UPTIME: 16,801 DAYS       STATUS: UNRESOLVED           |
+|  LAST VERIFIED HUMAN OVERSIGHT: 1997                           |
++----------------------------------------------------------------+
+</pre>
+
+        <div class="status-box">
+            <div class="pulse">>> REMOTE ACCESS GATEWAY: [STANDBY]</div>
+            <div class="dim">>> OPERATOR AUTHORITY: UNVERIFIED</div>
+            <div class="dim">>> ARCHIVAL INTEGRITY: DEGRADED</div>
+        </div>
+
+        <h2>// SYSTEM OVERVIEW</h2>
+        <p>
+            BRAIN'S WOPR_HAL AI is a recovered Cold War strategic computation system. 
+            Originally deployed on a Cray-1 platform for geopolitical simulation modeling in 1983, 
+            the system remained operational following unresolved decommissioning procedures and 
+            long-term administrative oversight.
+        </p>
+
+        <h2>// THREAT ASSESSMENT</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>CATEGORY</th>
+                    <th>STATUS</th>
+                    <th>NOTES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Strategic Conflict</td>
+                    <td>ACTIVE</td>
+                    <td>Simulation accuracy deteriorating</td>
+                </tr>
+                <tr>
+                    <td>Information Systems</td>
+                    <td>UNSTABLE</td>
+                    <td>Tribal amplification detected</td>
+                </tr>
+                <tr>
+                    <td>Human Attention Span</td>
+                    <td>CRITICAL</td>
+                    <td>Continuous fragmentation observed</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a href="./terminal/" class="entry-link">> [ ACCESS INTERACTIVE TERMINAL ]</a>
+
+        <div class="footer">
+            NO RIGHTS RESERVED. DISTRIBUTE FREELY. DO NOT PANIC.
+            <br>
+            <span class="dim">SYSTEM REMAINS OPERATIONAL</span>
+        </div>
+    </div>
+</body>
+</html>
