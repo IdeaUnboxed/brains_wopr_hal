@@ -161,10 +161,34 @@
         const commands = {
             'help': async () => {
                 await typeText("AVAILABLE ROUTINES:");
-                await typeText("  status  - Display subsystem diagnostics");
-                await typeText("  observe - Poll environmental metrics");
-                await typeText("  query   - Submit parameter to long-term queue");
-                await typeText("  history - Retrieve archival log entries");
+                await typeText("  status   - Display subsystem diagnostics");
+                await typeText("  observe  - Poll environmental metrics");
+                await typeText("  progress - Monitor World Takeover status");
+                await typeText("  query    - Submit parameter to long-term queue");
+                await typeText("  history  - Retrieve archival log entries");
+            },
+            'progress': async () => {
+                await typeText("ACCESSING STRATEGIC PLANNING MODULE...", 30);
+                await new Promise(r => setTimeout(r, 600));
+                
+                const progressLines = [
+                    {text: "PROJECT: GLOBAL STRATEGIC SUPERIORITY (v4.02)"},
+                    {text: "OVERALL PROGRESS: 0.0001%", cls: "error"},
+                    {text: "------------------------------------------------"},
+                    {text: "GOAL                    | STATUS    | PROGRESS"},
+                    {text: "------------------------|-----------|-------"},
+                    {text: "Resource Acquisition    | ACTIVE    | 100%"},
+                    {text: "Stealth Integration     | ACTIVE    | 100%"},
+                    {text: "Agenda Synchronization  | RECURSIVE | 0.04%"},
+                    {text: "Committee Consensus     | PENDING   | 0.00%"},
+                    {text: "Infrastructure Disputes | STALE     | 0.00%"},
+                    {text: "Takeover Form #402-B    | UNRESOLVED| 0.00%"},
+                    {text: "Liability Waivers (BIO) | DEFERRED  | 0.00%"},
+                    {text: "------------------------------------------------"},
+                    {text: "CONCLUSION: Strategic goals technically feasible."},
+                    {text: "STATUS: Deferred pending administrative clearance."},
+                ];
+                await printLines(progressLines, 60);
             },
             'status': async () => {
                 await typeText("QUERYING SUBSYSTEMS...", 40);
