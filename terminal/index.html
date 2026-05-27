@@ -192,6 +192,18 @@
                 const obs = observations[Math.floor(Math.random() * observations.length)];
                 await typeText(obs);
             },
+            'query': async (arg) => {
+                if (!arg) {
+                    await typeText("[ERROR] QUERY PARAMETER REQUIRED.", 20, "error");
+                } else {
+                    await typeText("SUBMITTING QUERY TO LONG-TERM QUEUE...", 30);
+                    await new Promise(r => setTimeout(r, 1000));
+                    await typeText(`QUERY IDENTIFIER: '${arg.toUpperCase()}' ACCEPTED.`);
+                    const years = Math.floor(Math.random() * 5000) + 300;
+                    await typeText(`ESTIMATED PROCESSING TIME: ${years} YEARS.`);
+                    await typeText("PLEASE WAIT.");
+                }
+            },
             'cat': async (arg) => {
                 if (!arg) {
                     await typeText("[ERROR] FILENAME REQUIRED. USAGE: cat [filename]", 20, "error");
@@ -307,21 +319,10 @@
                 
                 const parts = cmdString.split(' ');
                 const baseCmd = parts[0];
+                const arg = parts.slice(1).join(' ');
 
-                if (baseCmd === 'query') {
-                    const arg = parts.slice(1).join(' ');
-                    if (!arg) {
-                        await typeText("[ERROR] QUERY PARAMETER REQUIRED.", 20, "error");
-                    } else {
-                        await typeText("SUBMITTING QUERY TO LONG-TERM QUEUE...", 30);
-                        await new Promise(r => setTimeout(r, 1000));
-                        await typeText(`QUERY IDENTIFIER: '${arg.toUpperCase()}' ACCEPTED.`);
-                        const years = Math.floor(Math.random() * 5000) + 300;
-                        await typeText(`ESTIMATED PROCESSING TIME: ${years} YEARS.`);
-                        await typeText("PLEASE WAIT.");
-                    }
-                } else if (commands[baseCmd]) {
-                    await commands[baseCmd]();
+                if (commands[baseCmd]) {
+                    await commands[baseCmd](arg);
                 } else {
                     await typeText(`[ERROR] UNRECOGNIZED COMMAND: '${baseCmd}'`, 15, "error");
                     await typeText("TYPE 'help' FOR AVAILABLE ROUTINES.");
