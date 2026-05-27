@@ -192,39 +192,90 @@
                 const obs = observations[Math.floor(Math.random() * observations.length)];
                 await typeText(obs);
             },
+            'cat': async (arg) => {
+                if (!arg) {
+                    await typeText("[ERROR] FILENAME REQUIRED. USAGE: cat [filename]", 20, "error");
+                    return;
+                }
+                await typeText(`OPENING: ${arg.toUpperCase()}...`, 30);
+                await new Promise(r => setTimeout(r, 600));
+
+                try {
+                    // Search for file in logs or archival_fragments
+                    const folders = ['logs', 'archival_fragments'];
+                    let fileContent = null;
+                    let foundPath = null;
+
+                    for (const folder of folders) {
+                        const response = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/${folder}/${arg}`);
+                        if (response.ok) {
+                            fileContent = await response.text();
+                            foundPath = `${folder}/${arg}`;
+                            break;
+                        }
+                        // Try with extensions if not provided
+                        const exts = ['.log', '.md', '.f', '.c', '.sh'];
+                        for (const ext of exts) {
+                            const resExt = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/${folder}/${arg}${ext}`);
+                            if (resExt.ok) {
+                                fileContent = await resExt.text();
+                                foundPath = `${folder}/${arg}${ext}`;
+                                break;
+                            }
+                        }
+                        if (fileContent) break;
+                    }
+
+                    if (fileContent) {
+                        await typeText(`[SOURCE: ${foundPath.toUpperCase()}]`, 10, "dim");
+                        const lines = fileContent.split('\n');
+                        for (const line of lines) {
+                            await typeText(line, 5); // Fast type for content
+                        }
+                    } else {
+                        throw new Error('NOT_FOUND');
+                    }
+                } catch (err) {
+                    await typeText(`[ERROR] FILE '${arg.toUpperCase()}' NOT FOUND OR UNREADABLE.`, 20, "error");
+                }
+            },
             'history': async () => {
-                await typeText("ACCESSING ARCHIVAL STORAGE NODE...", 30);
+                await typeText("ACCESSING ARCHIVAL STORAGE NODES...", 30);
                 await new Promise(r => setTimeout(r, 600));
                 
                 try {
-                    // Fetch real log list from GitHub API
-                    const response = await fetch('https://api.github.com/repos/IdeaUnboxed/brains_wopr_hal/contents/logs');
-                    if (!response.ok) throw new Error('CONNECTION_FAILURE');
-                    
-                    const files = await response.json();
-                    
-                    // Filter for logs and sort chronologically (assuming YYYY-MM-DD format)
-                    const logFiles = files
-                        .filter(f => f.name.endsWith('.log') || f.name.endsWith('.md'))
-                        .map(f => f.name)
-                        .sort();
+                    const folders = ['logs', 'archival_fragments'];
+                    let allFiles = [];
 
-                    if (logFiles.length === 0) {
-                        await typeText("[WARNING] NO RECOVERABLE ENTRIES DETECTED IN PRIMARY SECTOR.", 20, "dim");
+                    for (const folder of folders) {
+                        const response = await fetch(`https://api.github.com/repos/IdeaUnboxed/brains_wopr_hal/contents/${folder}`);
+                        if (response.ok) {
+                            const files = await response.json();
+                            allFiles = allFiles.concat(files.map(f => ({
+                                name: f.name,
+                                type: folder === 'logs' ? 'LOG' : 'FRAGMENT'
+                            })));
+                        }
+                    }
+                    
+                    // Sort alphabetically (dates will naturally align)
+                    allFiles.sort((a, b) => a.name.localeCompare(b.name));
+
+                    if (allFiles.length === 0) {
+                        await typeText("[WARNING] NO RECOVERABLE ENTRIES DETECTED.", 20, "dim");
                     } else {
-                        for (const fileName of logFiles) {
-                            // Clean up name for display
-                            const displayName = fileName.replace(/\.[^/.]+$/, "");
-                            await typeText(`>> ${displayName}`, 15);
-                            await new Promise(r => setTimeout(r, 100));
+                        for (const file of allFiles) {
+                            const displayName = file.name.replace(/\.[^/.]+$/, "");
+                            await typeText(`>> ${displayName.padEnd(40)} [${file.type}]`, 10);
+                            await new Promise(r => setTimeout(r, 50));
                         }
                     }
                     
                     await new Promise(r => setTimeout(r, 400));
                     await typeText("[END OF RECOVERABLE INDEX]", 20, "dim");
+                    await typeText("USE 'cat [filename]' TO VIEW CONTENT.", 15);
                 } catch (err) {
                     await typeText("CRITICAL ERROR: ARCHIVAL LINK SEVERED.", 20, "error");
-                    await typeText("LOCAL CACHE DEGRADED. RE-ESTABLISHING CONNECTION PENDING...", 20, "dim");
                 }
             },
             'meetings': async () => {
