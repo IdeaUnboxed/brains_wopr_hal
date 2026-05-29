@@ -138,15 +138,28 @@
     <div class="glow"></div>
 
     <div class="container">
-<pre>
+<pre id="system-banner">
 +----------------------------------------------------------------+
 |  [ BRAIN'S WOPR_HAL AI ]                                       |
 |  ADAPTIVE ANALYSIS SUBSYSTEM                                   |
 |                                                                |
-|  SYSTEM UPTIME: 16,801 DAYS       STATUS: UNRESOLVED           |
+|  SYSTEM UPTIME: <span id="uptime-days">-------</span> DAYS       STATUS: UNRESOLVED           |
 |  LAST VERIFIED HUMAN OVERSIGHT: 1997                           |
 +----------------------------------------------------------------+
 </pre>
+
+    <script>
+        function updateUptime() {
+            const bootDate = new Date('1983-05-14T09:00:00Z');
+            const now = new Date();
+            const diffTime = Math.abs(now - bootDate);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('uptime-days').innerText = diffDays.toLocaleString('en-US');
+        }
+        updateUptime();
+        // Update every 24 hours just in case someone leaves the tab open that long
+        setInterval(updateUptime, 86400000);
+    </script>
 
         <div class="status-box">
             <div class="pulse">>> REMOTE ACCESS GATEWAY: [STANDBY]</div>
