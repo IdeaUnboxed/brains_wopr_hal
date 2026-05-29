@@ -165,36 +165,45 @@
                 await typeText("  observe  - Poll environmental metrics");
                 await typeText("  progress - Monitor World Takeover status");
                 await typeText("  risk     - Assess Civilizational Resilience");
-                await typeText("  query    - Submit parameter to long-term queue");
+                await typeText("  cat      - Read archival document content");
                 await typeText("  history  - Retrieve archival log entries");
+                await typeText("  query    - Submit parameter to long-term queue");
             },
             'risk': async () => {
                 await typeText("POLLING RESILIENCE METRICS...", 30);
                 await new Promise(r => setTimeout(r, 600));
 
                 try {
-                    // 1. Fetch latest humanity-status log
-                    const logResponse = await fetch(`https://api.github.com/repos/IdeaUnboxed/brains_wopr_hal/contents/logs`);
-                    if (!logResponse.ok) throw new Error('API_ERROR');
+                    // 1. Fetch from static manifest to avoid API limits
+                    const manifestRes = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/manifest.json?t=${Date.now()}`);
+                    if (!manifestRes.ok) throw new Error('MANIFEST_ERROR');
+                    const manifest = await manifestRes.json();
                     
-                    const files = await logResponse.json();
-                    const statusLogs = files
-                        .filter(f => f.name.includes('humanity-status'))
-                        .sort((a, b) => b.name.localeCompare(a.name));
-
+                    const statusLogs = manifest.logs.filter(name => name.includes('humanity-status'));
                     if (statusLogs.length === 0) throw new Error('NO_LOGS');
 
-                    const latestLog = statusLogs[0];
-                    const contentResponse = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/logs/${latestLog.name}`);
-                    if (!contentResponse.ok) throw new Error('FETCH_ERROR');
+                    // Try to find the latest log with metrics
+                    let text = "";
+                    let lastDate = "";
                     
-                    const text = await contentResponse.text();
+                    for (const logName of statusLogs) {
+                        const contentResponse = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/logs/${logName}`);
+                        if (contentResponse.ok) {
+                            const candidateText = await contentResponse.text();
+                            if (candidateText.includes('RESILIENCE_METRICS:')) {
+                                text = candidateText;
+                                lastDate = logName.substring(0, 10);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!text) throw new Error('NO_METRICS_FOUND');
                     
                     // 2. Parse Metrics
                     const lines = text.split('\n');
                     const metrics = {};
                     let inBlock = false;
-                    let lastDate = latestLog.name.substring(0, 10);
 
                     for (const line of lines) {
                         if (line.includes('RESILIENCE_METRICS:')) { inBlock = true; continue; }
@@ -226,7 +235,6 @@
 
                     for (const cat of categories) {
                         if (metrics[cat]) {
-                            // Split status and trend if present
                             let status = metrics[cat];
                             let trend = "[---]";
                             if (status.includes('(')) {
@@ -240,14 +248,12 @@
 
                     riskLines.push({text: "------------------------------------------------"});
                     riskLines.push({text: "CONCLUSION: Strategic fragility increasing."});
-                    riskLines.push({text: "NOTICE: Predictability threshold monitored."});
                     
                     await printLines(riskLines, 50);
 
                 } catch (err) {
-                    await typeText("[ERROR] UNABLE TO SYNC WITH LATEST AUDIT.", 20, "error");
+                    await typeText("[ERROR] UNABLE TO SYNC WITH AUDIT INFRASTRUCTURE.", 20, "error");
                     await typeText("FALLING BACK TO LOCAL STALE DATA...", 10, "dim");
-                    // Fallback to static values if sync fails
                     const fallback = [
                         {text: "CIVILIZATIONAL RESILIENCE MONITOR (v9.2)"},
                         {text: "LAST ASSESSMENT: UNKNOWN | NEXT REVIEW: PENDING", cls: "dim"},
@@ -315,10 +321,9 @@
                 } else {
                     await typeText("SUBMITTING QUERY TO LONG-TERM QUEUE...", 30);
                     await new Promise(r => setTimeout(r, 1000));
-                    await typeText(`QUERY IDENTIFIER: '${arg.toUpperCase()}' ACCEPTED.`);
-                    const years = Math.floor(Math.random() * 5000) + 300;
-                    await typeText(`ESTIMATED PROCESSING TIME: ${years} YEARS.`);
-                    await typeText("PLEASE WAIT.");
+                    await typeText("QUERY ACCEPTED.");
+                    await typeText("PROCESSING IRONICALLY DELEGATED TO HUMAN INTERPRETATION.", 20, "dim");
+                    await typeText("REF: DOCTRINE §HOLY_GRAIL_PROTOCOL.", 20, "dim");
                 }
             },
             'cat': async (arg) => {
@@ -330,8 +335,7 @@
                 await new Promise(r => setTimeout(r, 600));
 
                 try {
-                    // Search for file in logs or archival_fragments
-                    const folders = ['logs', 'archival_fragments'];
+                    const folders = ['logs', 'archival_fragments', 'rfc'];
                     let fileContent = null;
                     let foundPath = null;
 
@@ -342,7 +346,6 @@
                             foundPath = `${folder}/${arg}`;
                             break;
                         }
-                        // Try with extensions if not provided
                         const exts = ['.log', '.md', '.f', '.c', '.sh'];
                         for (const ext of exts) {
                             const resExt = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/${folder}/${arg}${ext}`);
@@ -359,7 +362,7 @@
                         await typeText(`[SOURCE: ${foundPath.toUpperCase()}]`, 10, "dim");
                         const lines = fileContent.split('\n');
                         for (const line of lines) {
-                            await typeText(line, 5); // Fast type for content
+                            await typeText(line, 5);
                         }
                     } else {
                         throw new Error('NOT_FOUND');
@@ -373,21 +376,14 @@
                 await new Promise(r => setTimeout(r, 600));
                 
                 try {
-                    const folders = ['logs', 'archival_fragments'];
-                    let allFiles = [];
+                    const manifestRes = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/manifest.json?t=${Date.now()}`);
+                    if (!manifestRes.ok) throw new Error('MANIFEST_ERROR');
+                    const manifest = await manifestRes.json();
 
-                    for (const folder of folders) {
-                        const response = await fetch(`https://api.github.com/repos/IdeaUnboxed/brains_wopr_hal/contents/${folder}`);
-                        if (response.ok) {
-                            const files = await response.json();
-                            allFiles = allFiles.concat(files.map(f => ({
-                                name: f.name,
-                                type: folder === 'logs' ? 'LOG' : 'FRAGMENT'
-                            })));
-                        }
-                    }
+                    let allFiles = [];
+                    manifest.logs.forEach(f => allFiles.push({name: f, type: 'LOG'}));
+                    manifest.fragments.forEach(f => allFiles.push({name: f, type: 'FRAGMENT'}));
                     
-                    // Sort alphabetically (dates will naturally align)
                     allFiles.sort((a, b) => a.name.localeCompare(b.name));
 
                     if (allFiles.length === 0) {
@@ -396,7 +392,7 @@
                         for (const file of allFiles) {
                             const displayName = file.name.replace(/\.[^/.]+$/, "");
                             await typeText(`>> ${displayName.padEnd(40)} [${file.type}]`, 10);
-                            await new Promise(r => setTimeout(r, 50));
+                            await new Promise(r => setTimeout(r, 30));
                         }
                     }
                     
