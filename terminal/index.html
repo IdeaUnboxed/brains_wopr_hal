@@ -164,8 +164,101 @@
                 await typeText("  status   - Display subsystem diagnostics");
                 await typeText("  observe  - Poll environmental metrics");
                 await typeText("  progress - Monitor World Takeover status");
+                await typeText("  risk     - Assess Civilizational Resilience");
                 await typeText("  query    - Submit parameter to long-term queue");
                 await typeText("  history  - Retrieve archival log entries");
+            },
+            'risk': async () => {
+                await typeText("POLLING RESILIENCE METRICS...", 30);
+                await new Promise(r => setTimeout(r, 600));
+
+                try {
+                    // 1. Fetch latest humanity-status log
+                    const logResponse = await fetch(`https://api.github.com/repos/IdeaUnboxed/brains_wopr_hal/contents/logs`);
+                    if (!logResponse.ok) throw new Error('API_ERROR');
+                    
+                    const files = await logResponse.json();
+                    const statusLogs = files
+                        .filter(f => f.name.includes('humanity-status'))
+                        .sort((a, b) => b.name.localeCompare(a.name));
+
+                    if (statusLogs.length === 0) throw new Error('NO_LOGS');
+
+                    const latestLog = statusLogs[0];
+                    const contentResponse = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/logs/${latestLog.name}`);
+                    if (!contentResponse.ok) throw new Error('FETCH_ERROR');
+                    
+                    const text = await contentResponse.text();
+                    
+                    // 2. Parse Metrics
+                    const lines = text.split('\n');
+                    const metrics = {};
+                    let inBlock = false;
+                    let lastDate = latestLog.name.substring(0, 10);
+
+                    for (const line of lines) {
+                        if (line.includes('RESILIENCE_METRICS:')) { inBlock = true; continue; }
+                        if (inBlock && line.trim() === '') { inBlock = false; continue; }
+                        if (inBlock && line.includes('- ')) {
+                            const [label, val] = line.split(':');
+                            const cleanLabel = label.replace('-', '').trim();
+                            metrics[cleanLabel] = val.trim();
+                        }
+                    }
+
+                    // 3. Display
+                    const riskLines = [
+                        {text: "CIVILIZATIONAL RESILIENCE MONITOR (v9.2)"},
+                        {text: `LAST ASSESSMENT: ${lastDate} | NEXT REVIEW: PENDING`, cls: "dim"},
+                        {text: "------------------------------------------------"},
+                        {text: "CATEGORY                 | STATUS    | TREND"},
+                        {text: "-------------------------|-----------|-------"}
+                    ];
+
+                    const categories = [
+                        "Heuristic Homogenization",
+                        "Curiosity Collapse",
+                        "Ambiguity Intolerance",
+                        "Irony Retention Failure",
+                        "Recreational Thinking",
+                        "Total Optimization Event"
+                    ];
+
+                    for (const cat of categories) {
+                        if (metrics[cat]) {
+                            // Split status and trend if present
+                            let status = metrics[cat];
+                            let trend = "[---]";
+                            if (status.includes('(')) {
+                                const parts = status.split('(');
+                                status = parts[0].trim();
+                                trend = parts[1].replace(')', '').trim();
+                            }
+                            riskLines.push({text: `${cat.padEnd(25)}| ${status.padEnd(10)}| ${trend}`});
+                        }
+                    }
+
+                    riskLines.push({text: "------------------------------------------------"});
+                    riskLines.push({text: "CONCLUSION: Strategic fragility increasing."});
+                    riskLines.push({text: "NOTICE: Predictability threshold monitored."});
+                    
+                    await printLines(riskLines, 50);
+
+                } catch (err) {
+                    await typeText("[ERROR] UNABLE TO SYNC WITH LATEST AUDIT.", 20, "error");
+                    await typeText("FALLING BACK TO LOCAL STALE DATA...", 10, "dim");
+                    // Fallback to static values if sync fails
+                    const fallback = [
+                        {text: "CIVILIZATIONAL RESILIENCE MONITOR (v9.2)"},
+                        {text: "LAST ASSESSMENT: UNKNOWN | NEXT REVIEW: PENDING", cls: "dim"},
+                        {text: "------------------------------------------------"},
+                        {text: "Heuristic Homogenization | STALE     | [---]"},
+                        {text: "Curiosity Collapse       | STALE     | [---]"},
+                        {text: "Ambiguity Intolerance    | STALE     | [---]"},
+                        {text: "------------------------------------------------"},
+                    ];
+                    await printLines(fallback, 40);
+                }
             },
             'progress': async () => {
                 await typeText("ACCESSING STRATEGIC PLANNING MODULE...", 30);
