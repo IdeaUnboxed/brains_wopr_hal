@@ -190,7 +190,7 @@
                         const contentResponse = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/logs/${logName}`);
                         if (contentResponse.ok) {
                             const candidateText = await contentResponse.text();
-                            if (candidateText.includes('RESILIENCE_METRICS:')) {
+                            if (/resilience[_\s]metrics/i.test(candidateText)) {
                                 text = candidateText;
                                 lastDate = logName.substring(0, 10);
                                 break;
@@ -206,12 +206,21 @@
                     let inBlock = false;
 
                     for (const line of lines) {
-                        if (line.includes('RESILIENCE_METRICS:')) { inBlock = true; continue; }
-                        if (inBlock && line.trim() === '') { inBlock = false; continue; }
-                        if (inBlock && line.includes('- ')) {
-                            const [label, val] = line.split(':');
-                            const cleanLabel = label.replace('-', '').trim();
-                            metrics[cleanLabel] = val.trim();
+                        if (/resilience[_\s]metrics/i.test(line)) { 
+                            inBlock = true; 
+                            continue; 
+                        }
+                        if (inBlock) {
+                            if (line.trim().startsWith('-')) {
+                                const parts = line.split(':');
+                                if (parts.length >= 2) {
+                                    const label = parts[0].replace('-', '').trim();
+                                    const val = parts.slice(1).join(':').trim();
+                                    metrics[label] = val;
+                                }
+                            } else if (line.trim() !== '' && !line.trim().startsWith('-')) {
+                                inBlock = false;
+                            }
                         }
                     }
 
