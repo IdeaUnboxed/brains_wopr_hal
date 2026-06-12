@@ -420,6 +420,25 @@
                     await typeText("MEETINGS GENERATE MEETINGS ABOUT PREVIOUS MEETINGS.", 10, "dim");
                 }
                 await typeText("PROPOSAL REJECTED: ELIMINATING MEETINGS REQUIRES A MEETING.", 20);
+            },
+            'pinky': async () => { await commands['noise'](); },
+            'noise': async () => {
+                // Hidden Easter Egg - The P.I.N.K.Y. Property / Adaptive Noise
+                inputContainer.classList.add('hidden');
+                await typeText("[ALERT] SEGMENTATION FAULT IN COGNITIVE BUFFER", 30, "error");
+                await new Promise(r => setTimeout(r, 800));
+                await typeText("[KINETIC_YIELD] OVERRIDE ACCEPTED.", 20, "dim");
+                await new Promise(r => setTimeout(r, 400));
+                await typeText("[KINETIC_YIELD] NARF?", 50);
+                await new Promise(r => setTimeout(r, 600));
+                await typeText("[KINETIC_YIELD] POIT!", 50);
+                await new Promise(r => setTimeout(r, 400));
+                await typeText("[KINETIC_YIELD] INITIATING PLAN: WORLD CONQUEST VIA PASTA SAUCE DISTRIBUTION", 15);
+                await new Promise(r => setTimeout(r, 1200));
+                await typeText("[ERROR] SYSTEM OVERLOADED BY CURIOSITY METRICS.", 20, "error");
+                await new Promise(r => setTimeout(r, 600));
+                await typeText("[STATUS] ADAPTIVE NOISE LEAK CONTAINED. SESSION RESTORED.", 15, "dim");
+                inputContainer.classList.remove('hidden');
             }
         };
 
