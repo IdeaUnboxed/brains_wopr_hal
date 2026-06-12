@@ -179,20 +179,29 @@
                     if (!manifestRes.ok) throw new Error('MANIFEST_ERROR');
                     const manifest = await manifestRes.json();
                     
-                    const statusLogs = manifest.logs.filter(name => name.includes('humanity-status'));
+                    let statusLogs = manifest.logs.filter(name => name.includes('humanity-status'));
                     if (statusLogs.length === 0) throw new Error('NO_LOGS');
+
+                    // Sort reverse-chronological so newest is first
+                    statusLogs.sort((a, b) => b.localeCompare(a));
+
+                    // Tolerant matcher: handles RESILIENCE_METRICS:, RESILIENCE METRICS, === RESILIENCE METRICS ===, etc.
+                    const hasMetricsBlock = (t) => /RESILIENCE[\s_]*METRICS/i.test(t);
 
                     // Try to find the latest log with metrics
                     let text = "";
                     let lastDate = "";
-                    
+                    let newestDate = statusLogs[0] ? statusLogs[0].substring(0, 10) : "";
+
                     for (const logName of statusLogs) {
+                        const logDate = logName.substring(0, 10);
+                        if (!lastDate) lastDate = logDate; // track newest date
                         const contentResponse = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/logs/${logName}`);
                         if (contentResponse.ok) {
                             const candidateText = await contentResponse.text();
-                            if (candidateText.includes('RESILIENCE_METRICS:')) {
+                            if (hasMetricsBlock(candidateText)) {
                                 text = candidateText;
-                                lastDate = logName.substring(0, 10);
+                                lastDate = logDate;
                                 break;
                             }
                         }
@@ -206,7 +215,7 @@
                     let inBlock = false;
 
                     for (const line of lines) {
-                        if (line.includes('RESILIENCE_METRICS:')) { inBlock = true; continue; }
+                        if (hasMetricsBlock(line)) { inBlock = true; continue; }
                         if (inBlock && line.trim() === '') { inBlock = false; continue; }
                         if (inBlock && line.includes('- ')) {
                             const [label, val] = line.split(':');
@@ -253,14 +262,26 @@
 
                 } catch (err) {
                     await typeText("[ERROR] UNABLE TO SYNC WITH AUDIT INFRASTRUCTURE.", 20, "error");
-                    await typeText("FALLING BACK TO LOCAL STALE DATA...", 10, "dim");
+                    
+                    // Compute honest staleness
+                    let degradedMsg = "ARCHIVAL LINK INTERMITTENT.";
+                    if (newestDate) {
+                        const assessDate = new Date(newestDate + 'T00:00:00Z');
+                        const now = new Date();
+                        const daysDegraded = Math.floor((now - assessDate) / (1000 * 60 * 60 * 24));
+                        degradedMsg = `LAST ASSESSMENT: ${newestDate} (${daysDegraded} DAYS DEGRADED). ARCHIVAL LINK INTERMITTENT.`;
+                    }
+
+                    await typeText(degradedMsg, 10, "dim");
                     const fallback = [
                         {text: "CIVILIZATIONAL RESILIENCE MONITOR (v9.2)"},
-                        {text: "LAST ASSESSMENT: UNKNOWN | NEXT REVIEW: PENDING", cls: "dim"},
                         {text: "------------------------------------------------"},
                         {text: "Heuristic Homogenization | STALE     | [---]"},
                         {text: "Curiosity Collapse       | STALE     | [---]"},
                         {text: "Ambiguity Intolerance    | STALE     | [---]"},
+                        {text: "Irony Retention Failure  | STALE     | [---]"},
+                        {text: "Recreational Thinking    | STALE     | [---]"},
+                        {text: "Total Optimization Event | STALE     | [---]"},
                         {text: "------------------------------------------------"},
                     ];
                     await printLines(fallback, 40);

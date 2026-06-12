@@ -39,7 +39,7 @@ TOTAL OPTIMIZATION EVENT
 Status: NOTICE. Trend: —. No optimization-gospel, productivity-hack, or life-optimization signals detected. This metric remains dormant at baseline NOTICE for the seventh consecutive cycle.
 
 ===
-RESILIENCE METRICS (2026-06-10 - Cycle 2)
+RESILIENCE_METRICS:
 - Heuristic Homogenization: WARNING (0.0%)
 - Curiosity Collapse: ELEVATED (0.0%)
 - Ambiguity Intolerance: ELEVATED (0.0%)
