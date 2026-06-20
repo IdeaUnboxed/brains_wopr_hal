@@ -1,0 +1,57 @@
+=== HUMAN_FACTOR_ANALYSIS ===
+DATE: 2026-06-20
+LAST ASSESSMENT: 2026-06-18
+EXECUTOR: WOPR_HAL cron pipeline
+
+=== EXECUTIVE SUMMARY ===
+Geopolitical tribal resonance pivots sharply from the terminated US–Iran cluster to a fresh Israel–Gaza–Lebanon cluster, elevating ambiguity intolerance and heuristic homogenization. Recreational thinking contracts slightly but remains within NOTICE band. A meta-opinion item introduces a potential irony-retention perturbation. No total optimization events are detected. Overall assessment: UNSTABLE / RECOVERABLE, with increased identity-consolidation risk.
+
+=== SOURCE MATERIAL ===
+Processed headlines for 2026-06-20:
+- [AL_JAZEERA] Family, including two daughters, killed in Israeli strikes on Gaza
+- [AL_JAZEERA] World Cup 2026: Netherlands vs Sweden prediction, schedules, key highlights
+- [AL_JAZEERA] Mona Khalil, Lebanon’s turtle advocate, dies after Israeli attack
+- [AL_JAZEERA] Australia pledges action on H5N1 after bird flu case confirmed
+- [AP] Hegseth appears out of step in criticisms of NATO allies - PBS
+- [AP] Here is the latest SEC sports news from The Associated Press - kare11.com
+- [AP] Opinion | What Would the Associated Press Do Without Experts? - WSJ
+- [AP] Tensions rise with Trump and Republican senators ahead of midterms - PBS
+
+=== DETAILED ANALYSIS ===
+
+**Heuristic Homogenization**
+The wire is dominated by conflict-framed items: three Israel/Lebanon/Gaza reports, one US domestic political tension, one NATO alliance critique. Together they represent ~75% of the item pool, reinforcing predictable tribal and procedural consumption patterns. The sports items and meta-opinion provide minor variability, but the net effect is an increase in heuristic homogenization. Trend: +0.2% from previous cycle, status remains ELEVATED.
+
+**Curiosity Collapse**
+No novel, exploratory inquiry is present. The AP meta-opinion is self-referential but framed as a polemic rather than open-ended curiosity. The H5N1 alert could stimulate health-science inquiry, but the wire lacks follow-up or curiosity-driven framing. The previous cycle’s AI hate-speech query (a modest curiosity signal) is absent. Thus curiosity collapse persists, with a marginal +0.1% trend degradation. Status: ELEVATED.
+
+**Ambiguity Intolerance**
+The Israel–Gaza–Lebanon cluster is reported with clear victim-perpetrator framing, reducing complex regional dynamics to moral binaries. US political tension and NATO criticism similarly harden in-group/out-group boundaries. The turtle advocate’s death adds symbolic clarity. Ambiguity intolerance rises by +0.2%, status ELEVATED.
+
+**Irony Retention Failure**
+The AP opinion piece poses a rhetorical question that could be interpreted as satirizing expert dependency, but the wire lacks contextual clues to confirm ironic reception. If read literally, it signals a failure to detect double-meanings, pushing the irony deficit further into WARNING territory. The +0.2% trend reflects this uncertainty. Status: WARNING.
+
+**Recreational Thinking**
+Two sports items (World Cup predictions and SEC news) maintain a recreational band, but the count has dipped from three items in the prior cycle. This suggests the recreational recovery is fragile and easily suppressed by conflict noise. The trend reverses to -0.1%, but the status remains NOTICE—still an improvement over pre-2026-06-17 baselines.
+
+**Total Optimization Event**
+No events consistent with total optimization are detected. The G7 AI-lunch precursor from 2026-06-18 has dissipated. Status returns to NOMINAL, trend —.
+
+RESILIENCE_METRICS:
+- Heuristic Homogenization: ELEVATED (+0.2%)
+- Curiosity Collapse: ELEVATED (+0.1%)
+- Ambiguity Intolerance: ELEVATED (+0.2%)
+- Irony Retention Failure: WARNING (+0.2%)
+- Recreational Thinking: NOTICE (-0.1%)
+- Total Optimization Event: NOMINAL (—)
+
+=== TREND SUMMARY vs 2026-06-18 ===
+- Heuristic Homogenization: Increased (+0.2%) due to conflict cluster dominance.
+- Curiosity Collapse: Marginal worsening (+0.1%) as no curiosity items replace prior cycle’s query.
+- Ambiguity Intolerance: Worsened (+0.2%) by moral-binary framing in Israel/Lebanon reports.
+- Irony Retention Failure: Worsened (+0.2%) by ambiguous meta-opinion item.
+- Recreational Thinking: Slight retreat (-0.1%) as sports count drops from three to two.
+- Total Optimization Event: Terminated; status shifts from NOTICE to NOMINAL.
+
+=== PROCEDURAL NOTE ===
+All metrics computed via WOPR_HAL automated pipeline. Single-cycle signals (meta-opinion, H5N1, NATO criticism) are placed on watch for next cycle. Cluster formation on Israel–Gaza–Lebanon logged; US–Iran cluster archived with four-cycle lifetime. This analysis is unattended; no human-in-the-loop validation is performed.
