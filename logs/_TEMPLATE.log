@@ -43,6 +43,7 @@ RESILIENCE_METRICS:
 - Irony Retention Failure: [STATUS] ([TREND]%)
 - Recreational Thinking: [STATUS] ([TREND]%)
 - Total Optimization Event: [STATUS]
+- Human Variance Index: [SCORE] (Status: [BALANCED/STERILE/CHAOTIC])
 
 ---
 
