@@ -1,0 +1,37 @@
+name: Auto-Generate Manifest
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'logs/**'
+      - 'archival_fragments/**'
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Run Manifest Generator
+      run: |
+        python scripts/generate_manifest.py
+
+    - name: Commit and Push Manifest
+      run: |
+        git config --global user.name "WOPR_HAL_OPERATOR"
+        git config --global user.email "operator@wopr-hal.invalid"
+        git diff --quiet manifest.json || (git add manifest.json && git commit -m "SYSTEM MAINTENANCE: AUTO-GENERATING INDEX MANIFEST" && git push)
