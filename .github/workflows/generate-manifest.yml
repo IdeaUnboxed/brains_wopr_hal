@@ -26,6 +26,12 @@ jobs:
       with:
         python-version: '3.x'
 
+    - name: Run Schema Gate
+      run: |
+        for f in logs/*humanity-status*.log; do
+          grep -E -q -i "resilience[_\s]metrics" "$f" || { echo "MISSING_METRICS: $f"; exit 1; }
+        done
+
     - name: Run Manifest Generator
       run: |
         python scripts/generate_manifest.py

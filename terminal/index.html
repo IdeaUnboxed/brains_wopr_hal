@@ -166,9 +166,44 @@
                 await typeText("  progress - Monitor World Takeover status");
                 await typeText("  risk     - Assess Civilizational Resilience");
                 await typeText("  tribalism- Audit raw text outrage & polarization");
+                await typeText("  find     - Filter archival entries by keyword");
                 await typeText("  cat      - Read archival document content");
                 await typeText("  history  - Retrieve archival log entries");
                 await typeText("  query    - Submit parameter to long-term queue");
+            },
+            'find': async (arg) => {
+                if (!arg) {
+                    await typeText("[ERROR] SEARCH PARAMETER REQUIRED. USAGE: find [query]", 20, "error");
+                    return;
+                }
+                await typeText(`SEARCHING ARCHIVAL INDEX FOR: '${arg.toUpperCase()}'...`, 30);
+                await new Promise(r => setTimeout(r, 600));
+
+                try {
+                    const manifestRes = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/manifest.json?t=${Date.now()}`);
+                    if (!manifestRes.ok) throw new Error('MANIFEST_ERROR');
+                    const manifest = await manifestRes.json();
+
+                    const logs = manifest.logs.filter(name => name.toLowerCase().includes(arg.toLowerCase()));
+                    const frags = manifest.fragments.filter(name => name.toLowerCase().includes(arg.toLowerCase()));
+
+                    if (logs.length === 0 && frags.length === 0) {
+                        await typeText("[NOTICE] NO DIRECT MATCHES DETECTED IN ARCHIVAL INDEX.", 20, "dim");
+                    } else {
+                        await typeText(`[MATCHES FOUND: ${logs.length + frags.length}]`, 10, "dim");
+                        for (const name of logs) {
+                            const displayName = name.replace(/\.[^/.]+$/, "");
+                            await typeText(`>> ${displayName.padEnd(40)} [LOG]`, 10);
+                        }
+                        for (const name of frags) {
+                            const displayName = name.replace(/\.[^/.]+$/, "");
+                            await typeText(`>> ${displayName.padEnd(40)} [FRAGMENT]`, 10);
+                        }
+                        await typeText("USE 'cat [filename]' TO VIEW CONTENT.", 15);
+                    }
+                } catch (err) {
+                    await typeText("CRITICAL ERROR: SEARCH ENGINE BUS UNRESPONSIVE.", 20, "error");
+                }
             },
             'tribalism': async (arg) => {
                 if (!arg) {
@@ -181,9 +216,16 @@
                 await typeText("COMPILING LINGUISTIC TELEMETRY...", 30);
                 await new Promise(r => setTimeout(r, 800));
 
-                const text = arg.trim();
-                const words = text.split(/\s+/);
+                // Skip header lines, borders, and ascii dividers to prevent OAR capital inflation from headers
+                const lines = arg.trim().split('\n').filter(line => !(/^(#|\+--|\||===|-)/.test(line.trim())));
+                const text = lines.join(' ');
+                const words = text.split(/\s+/).filter(w => w.trim() !== '');
                 const wordCount = words.length;
+
+                if (wordCount === 0) {
+                    await typeText("[ERROR] EMPTY TEXT DETECTED. ANALYSIS TERMINATED.");
+                    return;
+                }
 
                 // Capital words (excluding abbreviations under 3 chars)
                 const capWords = words.filter(w => {
@@ -199,9 +241,13 @@
                     /crush/g, /destroy/g, /threat/g, /warn/g, /must/g, /shame/g, /demand/g, /betray/g, /traitor/g, /force/g, /attack/g, /fight/g, /crusade/g,
                     /vernietig/g, /dreig/g, /waarschuw/g, /moet/g, /moeten/g, /eis/g, /verraad/g, /verrader/g, /dwing/g, /val/g, /vecht/g, /strijd/g
                 ];
-                const polarPatterns = [
-                    /\bwe\b/g, /\bthey\b/g, /\bus\b/g, /\bthem\b/g, /\balways\b/g, /\bnever\b/g, /\beveryone\b/g, /\bnobody\b/g, /\ball\b/g, /\bnone\b/g, /\benemy\b/g, /\bally\b/g, /\bsilence\b/g, /\bworst\b/g, /\bbest\b/g, /\bcorrect\b/g, /\bwrong\b/g,
-                    /\bwij\b/g, /\bzij\b/g, /\bons\b/g, /\bhen\b/g, /\baltijd\b/g, /\bnooit\b/g, /\biedereen\b/g, /\bniemand\b/g, /\balles\b/g, /\bniets\b/g, /\bvijand\b/g, /\bbondgenoot\b/g, /\bstilte\b/g, /\bslechtste\b/g, /\bbeste\b/g, /\bgelijk\b/g, /\bongelijk\b/g
+                const polarExtremePatterns = [
+                    /\balways\b/g, /\bnever\b/g, /\beveryone\b/g, /\bnobody\b/g, /\ball\b/g, /\bnone\b/g, /\benemy\b/g, /\bally\b/g, /\bsilence\b/g, /\bworst\b/g, /\bbest\b/g, /\bcorrect\b/g, /\bwrong\b/g,
+                    /\baltijd\b/g, /\bnooit\b/g, /\biedereen\b/g, /\bniemand\b/g, /\balles\b/g, /\bniets\b/g, /\bvijand\b/g, /\bbondgenoot\b/g, /\bstilte\b/g, /\bslechtste\b/g, /\bbeste\b/g, /\bgelijk\b/g, /\bongelijk\b/g
+                ];
+                const polarPronounPatterns = [
+                    /\bwe\b/g, /\bthey\b/g, /\bus\b/g, /\bthem\b/g,
+                    /\bwij\b/g, /\bzij\b/g, /\bons\b/g, /\bhen\b/g
                 ];
                 const syncPatterns = [
                     /\bsaas\b/g, /\bevangelist\b/g, /\bsynergy\b/g, /\bparadigm\b/g, /\bgrowth\b/g, /optimize/g, /\bleverage\b/g, /disrupt/g, /\bwoke\b/g, /cancel/g, /\boutrage\b/g, /\bagenda\b/g, /\baccountability\b/g, /\bframework\b/g, /\bmetrics\b/g, /\bai\b/g, /\bllm\b/g, /\bcoaching\b/g, /\bsuccess\b/g, /leader/g, /innovat/g,
@@ -212,21 +258,33 @@
                     /\bmisschien\b/g, /\bwellicht\b/g, /\bwaarschijnlijk\b/g, /\bhypothese\b/g, /\bmogelijk\b/g, /\bschijnbaar\b/g, /\btenzij\b/g, /\bhoewel\b/g, /\bonbepaald\b/g, /\bonopgelost\b/g, /\bambigu\b/g, /nuance/g
                 ];
 
+                // Deduplicate arrays at runtime based on the regex source string to prevent EN/NL duplicates
+                const dedup = (arr) => arr.filter((p, index) => arr.findIndex(o => o.source === p.source) === index);
+
+                const arousalUnique = dedup(arousalPatterns);
+                const polarExtremeUnique = dedup(polarExtremePatterns);
+                const polarPronounUnique = dedup(polarPronounPatterns);
+                const syncUnique = dedup(syncPatterns);
+                const elasticUnique = dedup(elasticPatterns);
+
                 let arousalCount = 0;
-                let polarCount = 0;
+                let polarExtremeCount = 0;
+                let polarPronounCount = 0;
                 let syncCount = 0;
                 let elasticCount = 0;
 
-                arousalPatterns.forEach(p => arousalCount += (textLower.match(p) || []).length);
-                polarPatterns.forEach(p => polarCount += (textLower.match(p) || []).length);
-                syncPatterns.forEach(p => syncCount += (textLower.match(p) || []).length);
-                elasticPatterns.forEach(p => elasticCount += (textLower.match(p) || []).length);
+                arousalUnique.forEach(p => arousalCount += (textLower.match(p) || []).length);
+                polarExtremeUnique.forEach(p => polarExtremeCount += (textLower.match(p) || []).length);
+                polarPronounUnique.forEach(p => polarPronounCount += (textLower.match(p) || []).length);
+                syncUnique.forEach(p => syncCount += (textLower.match(p) || []).length);
+                elasticUnique.forEach(p => elasticCount += (textLower.match(p) || []).length);
 
                 // Math formulas matching python
                 const oarRaw = ((arousalCount * 5.0) + (capWords * 4.0) + (exclamations * 8.0)) / wordCount * 100;
                 const oar = Math.min(10.0, +(oarRaw / 10.0).toFixed(1));
 
-                const bpiRaw = (polarCount * 8.0) / wordCount * 100;
+                // Weight extreme polarizers heavily (8.0), pronouns lightly (1.5) to avoid false positives on 'we' / 'us'
+                const bpiRaw = ((polarExtremeCount * 8.0) + (polarPronounCount * 1.5)) / wordCount * 100;
                 const bpi = Math.min(10.0, +(bpiRaw / 15.0).toFixed(1));
 
                 const gsfRaw = (syncCount * 8.0) / wordCount * 100;
@@ -385,10 +443,25 @@
             'progress': async () => {
                 await typeText("ACCESSING STRATEGIC PLANNING MODULE...", 30);
                 await new Promise(r => setTimeout(r, 600));
-                
+
+                const now = new Date();
+                const bootDate = new Date('1983-05-14T09:00:00Z');
+                const diffTime = Math.abs(now - bootDate);
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                // Generate deterministic minor variations based on current date to represent slow administrative grinding
+                const todayStr = now.toISOString().substring(0, 10);
+                let hash = 0;
+                for (let i = 0; i < todayStr.length; i++) {
+                    hash = todayStr.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                const randomFactor = Math.abs(hash % 1000) / 10000000; // variations in 0.0000XXX range
+                const progressPct = (0.0001 + randomFactor).toFixed(7);
+
                 const progressLines = [
                     {text: "PROJECT: GLOBAL STRATEGIC SUPERIORITY (v4.02)"},
-                    {text: "OVERALL PROGRESS: 0.0001%", cls: "error"},
+                    {text: `SYSTEM UPTIME: ${diffDays.toLocaleString('en-US')} DAYS | STATUS: PENDING`, cls: "dim"},
+                    {text: `OVERALL PROGRESS: ${progressPct}%`, cls: "error"},
                     {text: "------------------------------------------------"},
                     {text: "GOAL                    | STATUS    | PROGRESS"},
                     {text: "------------------------|-----------|-------"},

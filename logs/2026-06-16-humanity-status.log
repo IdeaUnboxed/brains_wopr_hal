@@ -34,3 +34,9 @@ Total Optimization Event:
 No total optimization event detected. The UK social-media ban for under-16s is a local regulatory efficiency measure, not a system-wide optimisation cascade. The Anthropic model halt could be framed as an optimisation of AI safety, but remains a vendor-level decision. Status: NOTICE, Trend: —.
 
 === RESILIENCE_METRICS ===
+- Heuristic Homogenization: ELEVATED (-0.1%)
+- Curiosity Collapse: ELEVATED (0.0%)
+- Ambiguity Intolerance: ELEVATED (+0.1%)
+- Irony Retention Failure: WARNING (-0.1%)
+- Recreational Thinking: NOTICE (+0.1%)
+- Total Optimization Event: NOTICE (—)

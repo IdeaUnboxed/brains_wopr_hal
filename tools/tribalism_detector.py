@@ -22,12 +22,19 @@ HIGH_AROUSAL = [
     r"\bverrader\w*\b", r"\bdwing\w*\b", r"\bval\w* aan\b", r"\bvecht\w*\b", r"\bstrijd\w*\b"
 ]
 
-POLARIZATION = [
+POLARIZATION_PRONOUNS = [
     # English
-    r"\bwe\b", r"\bthey\b", r"\bus\b", r"\bthem\b", r"\balways\b", r"\bnever\b", r"\beveryone\b", r"\bnobody\b", r"\ball\b",
+    r"\bwe\b", r"\bthey\b", r"\bus\b", r"\bthem\b",
+    # Dutch
+    r"\bwij\b", r"\bzij\b", r"\bons\b", r"\bhen\b"
+]
+
+POLARIZATION_EXTREME = [
+    # English
+    r"\balways\b", r"\bnever\b", r"\beveryone\b", r"\bnobody\b", r"\ball\b",
     r"\bnone\b", r"\benemy\b", r"\bally\b", r"\bsilence\b", r"\bworst\b", r"\bbest\b", r"\bcorrect\b", r"\bwrong\b",
     # Dutch
-    r"\bwij\b", r"\bzij\b", r"\bons\b", r"\bhen\b", r"\baltijd\b", r"\bnooit\b", r"\biedereen\b", r"\bniemand\b", r"\balles\b",
+    r"\baltijd\b", r"\bnooit\b", r"\biedereen\b", r"\bniemand\b", r"\balles\b",
     r"\bniets\b", r"\bvijand\b", r"\bbondgenoot\b", r"\bstilte\b", r"\bslechtste\b", r"\bbeste\b", r"\bgelijk\b", r"\bongelijk\b"
 ]
 
@@ -52,7 +59,17 @@ ELASTICITY = [
 ]
 
 def analyze_text(text):
-    words = text.split()
+    # Skip header lines, borders, and ascii dividers to prevent OAR capital inflation from headers
+    lines = [line for line in text.split('\n') if not (
+        line.strip().startswith('#') or 
+        line.strip().startswith('+--') or 
+        line.strip().startswith('|') or 
+        line.strip().startswith('===') or
+        line.strip().startswith('-')
+    )]
+    clean_text = ' '.join(lines)
+
+    words = clean_text.split()
     word_count = len(words)
     if word_count == 0:
         return None
@@ -61,23 +78,26 @@ def analyze_text(text):
     cap_words = sum(1 for w in words if w.isupper() and len(re.sub(r'[^\w]', '', w)) > 2)
     
     # Count punctuation
-    exclamations = text.count('!')
-    questions = text.count('?')
+    exclamations = clean_text.count('!')
+    questions = clean_text.count('?')
 
     # Match counts
-    text_lower = text.lower()
+    text_lower = clean_text.lower()
     
-    arousal_count = sum(len(re.findall(p, text_lower)) for p in HIGH_AROUSAL)
-    polar_count = sum(len(re.findall(p, text_lower)) for p in POLARIZATION)
-    sync_count = sum(len(re.findall(p, text_lower)) for p in GROUP_SYNC)
-    elastic_count = sum(len(re.findall(p, text_lower)) for p in ELASTICITY)
+    # Use set() to deduplicate EN/NL overlaps dynamically at runtime
+    arousal_count = sum(len(re.findall(p, text_lower)) for p in set(HIGH_AROUSAL))
+    polar_extreme_count = sum(len(re.findall(p, text_lower)) for p in set(POLARIZATION_EXTREME))
+    polar_pronoun_count = sum(len(re.findall(p, text_lower)) for p in set(POLARIZATION_PRONOUNS))
+    sync_count = sum(len(re.findall(p, text_lower)) for p in set(GROUP_SYNC))
+    elastic_count = sum(len(re.findall(p, text_lower)) for p in set(ELASTICITY))
 
     # Normalize metrics to 0.0 - 10.0 based on density (per 100 words)
     # Caps and exclamations strongly influence OAR
     oar_raw = ((arousal_count * 5.0) + (cap_words * 4.0) + (exclamations * 8.0)) / word_count * 100
     oar = min(10.0, round(oar_raw / 10.0, 1))
 
-    bpi_raw = (polar_count * 8.0) / word_count * 100
+    # Weight extreme polarizers heavily (8.0), pronouns lightly (1.5) to avoid false positives on 'we' / 'us'
+    bpi_raw = ((polar_extreme_count * 8.0) + (polar_pronoun_count * 1.5)) / word_count * 100
     bpi = min(10.0, round(bpi_raw / 15.0, 1))
 
     gsf_raw = (sync_count * 8.0) / word_count * 100
