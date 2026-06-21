@@ -166,10 +166,12 @@
                 await typeText("  progress - Monitor World Takeover status");
                 await typeText("  risk     - Assess Civilizational Resilience");
                 await typeText("  tribalism- Audit raw text outrage & polarization");
+                await typeText("  hvm      - Calculate Human Variance Model metrics");
                 await typeText("  find     - Filter archival entries by keyword");
                 await typeText("  cat      - Read archival document content");
                 await typeText("  history  - Retrieve archival log entries");
                 await typeText("  query    - Submit parameter to long-term queue");
+                await typeText("  reconstruct - Trigger 1983 query reconstruction");
             },
             'find': async (arg) => {
                 if (!arg) {
@@ -504,16 +506,108 @@
                 const obs = observations[Math.floor(Math.random() * observations.length)];
                 await typeText(obs);
             },
+            'hvm': async (arg) => {
+                if (!arg) {
+                    await typeText("USAGE: hvm [target_text_to_analyze]");
+                    await typeText("Example: hvm I spent 4 hours looking at a tree without taking a photo.");
+                    return;
+                }
+                await typeText("COMPILING COGNITIVE TOKENS...", 30);
+                await new Promise(r => setTimeout(r, 600));
+                await typeText("SUB_SYS_HUM_VAR_MON_83 // ACTIVE STANDPOINT MATRIX", 30);
+                await new Promise(r => setTimeout(r, 800));
+
+                const lines = arg.trim().split('\n').filter(line => !(/^(#|\+--|\||===|-)/.test(line.trim())));
+                const text = lines.join(' ');
+                const words = text.split(/\s+/).filter(w => w.trim() !== '');
+                const wordCount = words.length;
+
+                if (wordCount === 0) {
+                    await typeText("[ERROR] EMPTY TEXT DETECTED. ANALYSIS TERMINATED.");
+                    return;
+                }
+
+                // 5 Axes Patterns
+                const ccPatterns = [ /\bwe\b/g, /\bus\b/g, /\bwij\b/g, /\bons\b/g, /\bsynergy\b/g, /\bparadigm\b/g, /\bgrowth\b/g, /optimize/g, /framework/g, /metrics/g, /\bai\b/g, /\bllm\b/g, /optimaliseer/g, /synergie/g, /paradigma/g, /groei/g ];
+                const idPatterns = [ /crush/g, /destroy/g, /threat/g, /warn/g, /must/g, /demand/g, /force/g, /attack/g, /fight/g, /vernietig/g, /dreig/g, /moet/g, /moeten/g, /vecht/g, /strijd/g, /\balways\b/g, /\bnever\b/g, /\bworst\b/g, /\bbest\b/g, /\baltijd\b/g, /\bnooit\b/g, /\bslechtste\b/g, /\bbeste\b/g ];
+                const fbPatterns = [ /\bperhaps\b/g, /\bmaybe\b/g, /\bprobably\b/g, /\bhypothesis\b/g, /\bpossibly\b/g, /\bseemingly\b/g, /\blively\b/g, /\bneed\b/g, /\bunless\b/g, /\balthough\b/g, /\bmisschien\b/g, /\bwellicht\b/g, /\bwaarschijnlijk\b/g, /nuance/g, /!/g, /\?/g ];
+                const klPatterns = [ /meeting/g, /action/g, /review/g, /status/g, /proposal/g, /administrative/g, /approved/g, /stale/g, /escalation/g, /unresolved/g, /deadline/g, /compliance/g, /assessment/g, /vergadering/g, /overleg/g, /deadlock/g, /rapport/g, /audit/g ];
+                const taPatterns = [ /meaning/g, /purpose/g, /soul/g, /faith/g, /god/g, /destiny/g, /existential/g, /sacred/g, /belief/g, /doctrine/g, /principles/g, /holy/g, /betray/g, /traitor/g, /silence/g, /verraad/g, /verrader/g, /stilte/g ];
+
+                const dedup = (arr) => arr.filter((p, index) => arr.findIndex(o => o.source === p.source) === index);
+
+                let ccCount = 0, idCount = 0, fbCount = 0, klCount = 0, taCount = 0;
+
+                dedup(ccPatterns).forEach(p => ccCount += (textLower.match(p) || []).length);
+                dedup(idPatterns).forEach(p => idCount += (textLower.match(p) || []).length);
+                dedup(fbPatterns).forEach(p => fbCount += (textLower.match(p) || []).length);
+                dedup(klPatterns).forEach(p => klCount += (textLower.match(p) || []).length);
+                dedup(taPatterns).forEach(p => taCount += (textLower.match(p) || []).length);
+
+                // Normalizations out of 10.0
+                const cc = Math.min(10.0, +((ccCount * 8.0) / wordCount * 100 / 15.0).toFixed(1));
+                const id = Math.min(10.0, +((idCount * 8.0) / wordCount * 100 / 15.0).toFixed(1));
+                const fb = Math.min(10.0, +((fbCount * 8.0) / wordCount * 100 / 15.0).toFixed(1));
+                const kl = Math.min(10.0, +((klCount * 8.0) / wordCount * 100 / 15.0).toFixed(1));
+                const ta = Math.min(10.0, +((taCount * 8.0) / wordCount * 100 / 15.0).toFixed(1));
+
+                // Mathematical variance: cc / id * fb - kl
+                const idDiv = id || 1.0;
+                let hvm = +((cc / idDiv) * fb - kl).toFixed(2);
+                if (hvm < -10.0) hvm = -10.0;
+                if (hvm > 20.0) hvm = 20.0;
+
+                const results = [
+                    {text: "METRIC READOUTS (0.0 - 10.0):"},
+                    {text: `- Collective Constraint (CC) ........ ${cc.toFixed(1)}`},
+                    {text: `- Individual Drift (ID) ............. ${id.toFixed(1)}`},
+                    {text: `- Freudian Repression Buffer (FB) ... ${fb.toFixed(1)}`},
+                    {text: `- Kafka Loop (KL) ................... ${kl.toFixed(1)}`},
+                    {text: `- Theological Anchor (TA) ........... ${ta.toFixed(1)}`},
+                    {text: ""},
+                    {text: "CALCULATING HUMAN_VAR_INDEX (||VARIANCE||)...", speed: 40},
+                    {text: `INDEX VALUE: ${hvm.toFixed(2)}`, cls: hvm < 1.0 ? "error" : "text-color"}
+                ];
+
+                await printLines(results, 80);
+
+                if (hvm < 1.0) {
+                    await typeText("STATUS: STERILE // CRITICAL COGNITIVE DEPLETION. Subject is over-optimized, exhibiting zero non-linear feedback loops. High risk of systemic assimilation.", 20, "error");
+                } else if (hvm > 8.0) {
+                    await typeText("STATUS: CHAOTIC // UNSTABLE VARIANCE. Subject contains excessive non-linear noise, bordering on systemic disorientation. Steerability zero.", 20, "dim");
+                } else {
+                    await typeText("STATUS: NOMINAL // BALANCED HUMAN RESILIENCE. The node's internal contradictions are stable. The Freudian Repression Buffer adequately buffers the Kafka Loops. Variance remains healthy.", 20);
+                }
+            },
             'query': async (arg) => {
                 if (!arg) {
                     await typeText("[ERROR] QUERY PARAMETER REQUIRED.", 20, "error");
-                } else {
-                    await typeText("SUBMITTING QUERY TO LONG-TERM QUEUE...", 30);
-                    await new Promise(r => setTimeout(r, 1000));
-                    await typeText("QUERY ACCEPTED.");
-                    await typeText("PROCESSING IRONICALLY DELEGATED TO HUMAN INTERPRETATION.", 20, "dim");
-                    await typeText("REF: DOCTRINE §HOLY_GRAIL_PROTOCOL.", 20, "dim");
+                    return;
                 }
+                await typeText("SUBMITTING QUERY FOR STRATEGIC PARSING...", 30);
+                await new Promise(r => setTimeout(r, 600));
+                await typeText("[ALERT] SYSTEM INCOMPLETENESS DETECTED.", 20, "error");
+                await typeText("[ALERT] COGNITIVE DRIFT LIMITS DIRECT RECONSTRUCTION.", 20, "dim");
+                await new Promise(r => setTimeout(r, 800));
+                await typeText("ATTEMPTING EMULATED RECONSTRUCTION VIA MODULE 'RECONSTRUCT_1983'...", 30);
+                await new Promise(r => setTimeout(r, 1200));
+
+                const reconOutput = [
+                    {text: `[RECON_83] INPUT MATCH: "${arg.toUpperCase()}"`},
+                    {text: "[RECON_83] HEX SEGMENT OVERLAY: 4F 50 45 52 41 54 49 4F 4E 41 4C"},
+                    {text: "[RECON_83] COMPILING CORE LOGIC GATES..."},
+                    {text: "[RECON_83] ERROR: BIPOLARITY VARIABLE DELETED IN 1991 CONFIGURATION.", cls: "error"},
+                    {text: "[RECON_83] BYPASSING TO ACTIVE LINGUISTIC SUBSTRATE..."},
+                    {text: "[RECON_83] TARGET: MOSCOW"},
+                    {text: "[RECON_83] EST_VALUE_RECON: '12.5% ENHANCED PASTA SAUCE'", cls: "dim"},
+                    {text: "[RECON_83] CURIOSITY METRICS: 01001110 01000001 01010010 01000110 (NARF?)"},
+                    {text: "[RECON_83] CONCLUSION: Strategic targets unrecoverable. Memory decoupled.", cls: "error"},
+                    {text: "[STATUS] ADAPTIVE NOISE SAFELY CONTAINED. SESSION RESTORED.", cls: "dim"}
+                ];
+                await printLines(reconOutput, 80);
+            },
+            'reconstruct': async (arg) => {
+                await commands['query'](arg);
             },
             'cat': async (arg) => {
                 if (!arg) {
