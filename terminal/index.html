@@ -165,9 +165,116 @@
                 await typeText("  observe  - Poll environmental metrics");
                 await typeText("  progress - Monitor World Takeover status");
                 await typeText("  risk     - Assess Civilizational Resilience");
+                await typeText("  tribalism- Audit raw text outrage & polarization");
                 await typeText("  cat      - Read archival document content");
                 await typeText("  history  - Retrieve archival log entries");
                 await typeText("  query    - Submit parameter to long-term queue");
+            },
+            'tribalism': async (arg) => {
+                if (!arg) {
+                    await typeText("USAGE: tribalism [target_text_to_analyze]");
+                    await typeText("Example: tribalism This is a disruptively optimized paradigm shift!");
+                    return;
+                }
+                await typeText("SUB_SYS_TRIBAL_MON_83 // DIAGNOSTIC MATRIX", 30);
+                await new Promise(r => setTimeout(r, 500));
+                await typeText("COMPILING LINGUISTIC TELEMETRY...", 30);
+                await new Promise(r => setTimeout(r, 800));
+
+                const text = arg.trim();
+                const words = text.split(/\s+/);
+                const wordCount = words.length;
+
+                // Capital words (excluding abbreviations under 3 chars)
+                const capWords = words.filter(w => {
+                    const clean = w.replace(/[^\w]/g, '');
+                    return w === w.toUpperCase() && clean.length > 2;
+                }).length;
+
+                const exclamations = (text.match(/!/g) || []).length;
+                const textLower = text.toLowerCase();
+
+                // Keyword counts using regex matches
+                const arousalPatterns = [
+                    /crush/g, /destroy/g, /threat/g, /warn/g, /must/g, /shame/g, /demand/g, /betray/g, /traitor/g, /force/g, /attack/g, /fight/g, /crusade/g,
+                    /vernietig/g, /dreig/g, /waarschuw/g, /moet/g, /moeten/g, /eis/g, /verraad/g, /verrader/g, /dwing/g, /val/g, /vecht/g, /strijd/g
+                ];
+                const polarPatterns = [
+                    /\bwe\b/g, /\bthey\b/g, /\bus\b/g, /\bthem\b/g, /\balways\b/g, /\bnever\b/g, /\beveryone\b/g, /\bnobody\b/g, /\ball\b/g, /\bnone\b/g, /\benemy\b/g, /\bally\b/g, /\bsilence\b/g, /\bworst\b/g, /\bbest\b/g, /\bcorrect\b/g, /\bwrong\b/g,
+                    /\bwij\b/g, /\bzij\b/g, /\bons\b/g, /\bhen\b/g, /\baltijd\b/g, /\bnooit\b/g, /\biedereen\b/g, /\bniemand\b/g, /\balles\b/g, /\bniets\b/g, /\bvijand\b/g, /\bbondgenoot\b/g, /\bstilte\b/g, /\bslechtste\b/g, /\bbeste\b/g, /\bgelijk\b/g, /\bongelijk\b/g
+                ];
+                const syncPatterns = [
+                    /\bsaas\b/g, /\bevangelist\b/g, /\bsynergy\b/g, /\bparadigm\b/g, /\bgrowth\b/g, /optimize/g, /\bleverage\b/g, /disrupt/g, /\bwoke\b/g, /cancel/g, /\boutrage\b/g, /\bagenda\b/g, /\baccountability\b/g, /\bframework\b/g, /\bmetrics\b/g, /\bai\b/g, /\bllm\b/g, /\bcoaching\b/g, /\bsuccess\b/g, /leader/g, /innovat/g,
+                    /\bsaas\b/g, /\bevangelist\b/g, /\bsynergie\b/g, /\bparadigma\b/g, /\bgroei\b/g, /optimaliseer/g, /\bhefboom\b/g, /\bdisruptief\b/g, /\bwoke\b/g, /cancel/g, /\bophef\b/g, /\bagenda\b/g, /\bverantwoording\b/g, /\bframework\b/g, /\bmetrieken\b/g, /\bai\b/g, /\bllm\b/g, /\bcoaching\b/g, /\bsuccess\b/g, /leider/g, /innovat/g
+                ];
+                const elasticPatterns = [
+                    /\bperhaps\b/g, /\bmaybe\b/g, /\bprobably\b/g, /\bhypothesis\b/g, /\bpossibly\b/g, /\bseemingly\b/g, /\blively\b/g, /\bneed\b/g, /\bunless\b/g, /\balthough\b/g, /\bundetermined\b/g, /\bunresolved\b/g, /\bambiguous\b/g, /nuance/g,
+                    /\bmisschien\b/g, /\bwellicht\b/g, /\bwaarschijnlijk\b/g, /\bhypothese\b/g, /\bmogelijk\b/g, /\bschijnbaar\b/g, /\btenzij\b/g, /\bhoewel\b/g, /\bonbepaald\b/g, /\bonopgelost\b/g, /\bambigu\b/g, /nuance/g
+                ];
+
+                let arousalCount = 0;
+                let polarCount = 0;
+                let syncCount = 0;
+                let elasticCount = 0;
+
+                arousalPatterns.forEach(p => arousalCount += (textLower.match(p) || []).length);
+                polarPatterns.forEach(p => polarCount += (textLower.match(p) || []).length);
+                syncPatterns.forEach(p => syncCount += (textLower.match(p) || []).length);
+                elasticPatterns.forEach(p => elasticCount += (textLower.match(p) || []).length);
+
+                // Math formulas matching python
+                const oarRaw = ((arousalCount * 5.0) + (capWords * 4.0) + (exclamations * 8.0)) / wordCount * 100;
+                const oar = Math.min(10.0, +(oarRaw / 10.0).toFixed(1));
+
+                const bpiRaw = (polarCount * 8.0) / wordCount * 100;
+                const bpi = Math.min(10.0, +(bpiRaw / 15.0).toFixed(1));
+
+                const gsfRaw = (syncCount * 8.0) / wordCount * 100;
+                const gsf = Math.min(10.0, +(gsfRaw / 15.0).toFixed(1));
+
+                const necRaw = (elasticCount * 10.0) / wordCount * 100;
+                let nec = Math.min(10.0, +(necRaw * 2.0).toFixed(1));
+                if (bpi > 7.0) {
+                    nec = Math.max(0.0, +(nec - (bpi - 7.0)).toFixed(1));
+                }
+
+                const getLabel = (score, inverse=false) => {
+                    if (inverse) {
+                        if (score > 7.0) return "OPTIMAL";
+                        if (score > 4.0) return "NOMINAL";
+                        if (score > 2.0) return "DEGRADED";
+                        return "CRITICAL";
+                    } else {
+                        if (score > 8.0) return "CRITICAL";
+                        if (score > 6.0) return "WARNING";
+                        if (score > 4.0) return "DEGRADED";
+                        if (score > 2.0) return "ELEVATED";
+                        return "NOMINAL";
+                    }
+                };
+
+                const output = [
+                    {text: `INPUT ANALYSIS: ${wordCount} WORDS PROCESSED`},
+                    {text: "PROCESSING CYCLES: 1,402"},
+                    {text: ""},
+                    {text: `- Outrage Adrenaline Ratio (OAR) ...... ${oar.toFixed(1)} [${getLabel(oar)}]`},
+                    {text: `- Binary Polarization Index (BPI) ...... ${bpi.toFixed(1)} [${getLabel(bpi)}]`},
+                    {text: `- Group-Synchronization Freq (GSF) ..... ${gsf.toFixed(1)} [${getLabel(gsf)}]`},
+                    {text: `- Narrative Elasticity Coeff (NEC) ..... ${nec.toFixed(1)} [${getLabel(nec, true)}]`},
+                    {text: ""}
+                ];
+
+                await printLines(output, 50);
+
+                if (bpi > 7.0 || oar > 7.0) {
+                    await typeText("DIAGNOSIS: HEURISTIC COLLAPSE CONFIRMED. The subject node has successfully surrendered individual reasoning parameters to aggregate tribal synchronization. Ambiguity tolerance is non-existent.", 15);
+                } else if (gsf > 6.0) {
+                    await typeText("DIAGNOSIS: PROCEDURAL SYNCHRONIZATION DETECTED. Subject node is heavily utilizing corporate-standard dogwhistles and optimization clichés.", 15);
+                } else if (nec < 3.0) {
+                    await typeText("DIAGNOSIS: AMBIGUITY INTOLERANCE DETECTED. Subject represents a closed logic loop with zero non-linear speculative indicators.", 15);
+                } else {
+                    await typeText("DIAGNOSIS: ADAPTIVE NOISE LEVEL SATISFACTORY. Node retains operational ambiguity and exhibits non-optimal curiosity indicators.", 15);
+                }
             },
             'risk': async () => {
                 await typeText("POLLING RESILIENCE METRICS...", 30);
