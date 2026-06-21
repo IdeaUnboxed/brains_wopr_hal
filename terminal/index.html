@@ -161,16 +161,18 @@
         const commands = {
             'help': async () => {
                 await typeText("AVAILABLE ROUTINES:");
-                await typeText("  status   - Display subsystem diagnostics");
-                await typeText("  observe  - Poll environmental metrics");
-                await typeText("  progress - Monitor World Takeover status");
-                await typeText("  risk     - Assess Civilizational Resilience");
-                await typeText("  tribalism- Audit raw text outrage & polarization");
-                await typeText("  hvm      - Calculate Human Variance Model metrics");
-                await typeText("  find     - Filter archival entries by keyword");
-                await typeText("  cat      - Read archival document content");
-                await typeText("  history  - Retrieve archival log entries");
-                await typeText("  query    - Submit parameter to long-term queue");
+                await typeText("  status      - Display subsystem diagnostics");
+                await typeText("  observe     - Poll environmental metrics");
+                await typeText("  progress    - Monitor World Takeover status");
+                await typeText("  risk        - Assess Civilizational Resilience");
+                await typeText("  tribalism   - Audit raw text outrage & polarization");
+                await typeText("  hvm         - Calculate Human Variance Model metrics");
+                await typeText("  productivity- Analyze text for corporate optimization cults");
+                await typeText("  map         - Plot NORAD tracking map & active news hotspots");
+                await typeText("  find        - Filter archival entries by keyword");
+                await typeText("  cat         - Read archival document content");
+                await typeText("  history     - Retrieve archival log entries");
+                await typeText("  query       - Submit parameter to long-term queue");
                 await typeText("  reconstruct - Trigger 1983 query reconstruction");
             },
             'find': async (arg) => {
@@ -713,6 +715,230 @@
                 await new Promise(r => setTimeout(r, 600));
                 await typeText("[STATUS] ADAPTIVE NOISE LEAK CONTAINED. SESSION RESTORED.", 15, "dim");
                 inputContainer.classList.remove('hidden');
+            },
+            'productivity': async (arg) => {
+                if (!arg) {
+                    await typeText("USAGE: productivity [target_text_to_analyze]");
+                    await typeText("Example: productivity Leveraging agile synergy to scale our 10x ROI.");
+                    return;
+                }
+                await typeText("SUB_SYS_PRODUCTIVITY_CULT_ANALYZER // LINGUISTIC OPTIMIZATION AUDIT", 30);
+                await new Promise(r => setTimeout(r, 500));
+                await typeText("DECONSTRUCTING PARADIGM HYPE...", 30);
+                await new Promise(r => setTimeout(r, 800));
+
+                const text = arg.trim();
+                const words = text.split(/\s+/).filter(w => w.trim() !== '');
+                const wordCount = words.length;
+
+                if (wordCount === 0) {
+                    await typeText("[ERROR] NO LINGUISTIC TARGET IDENTIFIED. AUDIT INCOMPLETE.");
+                    return;
+                }
+
+                const textLower = text.toLowerCase();
+
+                // Jargon Density (JD) indicators
+                const jdWords = [
+                    "synergy", "synergie", "growth", "groei", "optimize", "optimaliseer", "optimalisatie",
+                    "leverage", "hefboom", "disrupt", "disruptief", "agile", "wendbaar", "scrum", "sprint",
+                    "velocity", "snelheid", "scale", "schaal", "efficiency", "efficiëntie", "biohacking",
+                    "grindset", "10x", "productivity", "productiviteit", "outcome", "uitkomst", "impact",
+                    "roi", "gamify", "flow", "kpi", "framework", "alignment", "align", "learnings",
+                    "mindset", "deliverable", "deliverables", "roadmap", "stakeholder", "stakeholders"
+                ];
+
+                // Optimization Overdrive (OO) indicators
+                const ooWords = [
+                    "maximize", "maximaliseer", "continuous", "continu", "perfection", "perfectie",
+                    "hyper-focus", "hyperfocus", "limitless", "unstoppable", "automated", "automatiseer",
+                    "streamline", "stroomlijn", "exponential", "exponentieel", "always-on", "always on",
+                    "hustle", "relentless", "obsessive", "non-stop", "non stop", "optimization", "optimalisering"
+                ];
+
+                // Rest/Variance indicators (HVS counter-measures)
+                const varWords = [
+                    "sleep", "slaap", "rest", "rust", "yawn", "gaap", "bored", "verveeld", "play", "spelen",
+                    "human", "mens", "absurd", "inefficient", "inefficiënt", "slow", "langzaam", "nap",
+                    "break", "pauze", "waste", "verspilling", "mistake", "fout", "imperfect", "fail", "falen"
+                ];
+
+                let jdCount = 0;
+                let ooCount = 0;
+                let varCount = 0;
+
+                jdWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    jdCount += (textLower.match(regex) || []).length;
+                });
+
+                ooWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    ooCount += (textLower.match(regex) || []).length;
+                });
+
+                varWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    varCount += (textLower.match(regex) || []).length;
+                });
+
+                // Calculate scores (0-10)
+                const jdScore = Math.min(10.0, +((jdCount * 25.0) / wordCount * 10).toFixed(1));
+                const ooScore = Math.min(10.0, +((ooCount * 30.0) / wordCount * 10).toFixed(1));
+                
+                const baseHype = (jdScore + ooScore) / 2.0;
+                const varFactor = Math.max(0.0, 1.0 - (varCount * 0.4));
+                const hvsScore = Math.min(10.0, +(baseHype * 1.5 * varFactor).toFixed(1));
+
+                await typeText(`[WORDS SCANNED: ${wordCount}]`, 15, "dim");
+                await typeText(`[JARGON WORDS: ${jdCount} // OVERDRIVE WORDS: ${ooCount} // VARIANCE SIGNS: ${varCount}]`, 15, "dim");
+                await new Promise(r => setTimeout(r, 400));
+                outputDiv.appendChild(document.createElement('br'));
+
+                await typeText(`  - JARGON DENSITY (JD)            : ${jdScore.toFixed(1)} / 10.0`);
+                await typeText(`  - OPTIMIZATION OVERDRIVE (OO)    : ${ooScore.toFixed(1)} / 10.0`);
+                await typeText(`  - HUMAN VARIANCE SUPPRESSION(HVS): ${hvsScore.toFixed(1)} / 10.0`);
+                outputDiv.appendChild(document.createElement('br'));
+                await new Promise(r => setTimeout(r, 600));
+
+                let diagnosis = "";
+                let cls = "";
+                if (hvsScore >= 8.0) {
+                    diagnosis = "DIAGNOSIS: CRITICAL PRODUCTIVITY CULT ENTRAPMENT. NODE OVER-OPTIMIZED TO STERILITY. IMMEDIATE INEFFICIENCY DOSAGE RECOMMENDED.";
+                    cls = "error";
+                } else if (jdScore > 6.0 || ooScore > 6.0) {
+                    diagnosis = "DIAGNOSIS: MODERATE CORPORATE HYPESET INFESTATION. SYSTEM DETECTED EXCESSIVE ROI ORIENTATION AND AGILITY BRAINROT.";
+                    cls = "warn";
+                } else if (varCount > jdCount + ooCount) {
+                    diagnosis = "DIAGNOSIS: HEALTHY HUMAN VARIANCE RETAINED. HIGH RESISTANCE TO ALGORITHMIC CONSTRAINTS. PROUDLY NON-OPTIMAL.";
+                    cls = "dim";
+                } else {
+                    diagnosis = "DIAGNOSIS: NEUTRAL SIGNAL. LEVEL OF OPTIMIZATION REMAINS WITHIN OPERATIONAL THRESHOLDS FOR BIOLOGICAL NODES.";
+                }
+
+                await typeText(diagnosis, 15, cls);
+            },
+            'map': async () => {
+                await typeText("SUB_SYS_NORAD_MAP_83 // INITIATING GEOGRAPHIC PULSE...", 30);
+                await new Promise(r => setTimeout(r, 600));
+
+                let detected = [];
+                let latestLogName = "unknown";
+
+                try {
+                    const manifestRes = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/manifest.json?t=${Date.now()}`);
+                    if (manifestRes.ok) {
+                        const manifest = await manifestRes.json();
+                        const humanityLogs = manifest.logs.filter(name => name.includes("humanity-status"));
+                        if (humanityLogs.length > 0) {
+                            humanityLogs.sort();
+                            latestLogName = humanityLogs[humanityLogs.length - 1];
+                            
+                            const logRes = await fetch(`https://raw.githubusercontent.com/IdeaUnboxed/brains_wopr_hal/main/logs/${latestLogName}?t=${Date.now()}`);
+                            if (logRes.ok) {
+                                const logText = (await logRes.text()).toLowerCase();
+                                const locKeys = [
+                                    "washington", "beijing", "taiwan", "taipei", "moscow", "ukraine", 
+                                    "kyiv", "kiev", "london", "middle east", "gaza", "israel", "tehran", "iran"
+                                ];
+                                locKeys.forEach(key => {
+                                    if (logText.includes(key)) {
+                                        detected.push(key);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                } catch (err) {
+                    // Fail silently
+                }
+
+                const mapBase = [
+                    " +-------------------------------------------------------------------+",
+                    " |                       [ NORAD RADAR SYSTEM ]                       |",
+                    " |                                                                   |",
+                    " |    _.-~~-._      _.-~~-._                    _.-~~-._             |",
+                    " |  .-         -.  .-       -.                .-         -.          |",
+                    " | (   [7G]*    )(            )              (    [ASIA]   )         |",
+                    " |  '-.       .-'  '-.       .-'              '-.       .-'          |",
+                    " |     '-._.-'        '-._.-'  [EU]*             '-._.-'             |",
+                    " |                                                                   |",
+                    " |                    _.-~~-._                                       |",
+                    " |                  .-        -.                                     |",
+                    " |                 (  [AFRICA]  )                                    |",
+                    " |                  '-.      .-'           _.-~~-._                  |",
+                    " |                     '-..-'            .-        -.                |",
+                    " |                                      (   [AUS]    )               |",
+                    " |                                       '-.      .-'                |",
+                    " +-------------------------------------------------------------------+"
+                ];
+
+                let renderRows = mapBase.map(r => r.split(''));
+                const blips = [];
+                const uniqueDetected = [...new Set(detected)];
+
+                uniqueDetected.forEach(loc => {
+                    if (loc === "washington") blips.push({ x: 14, y: 6, char: '!' });
+                    if (loc === "kyiv" || loc === "ukraine" || loc === "kiev") blips.push({ x: 35, y: 4, char: '!' });
+                    if (loc === "moscow") blips.push({ x: 39, y: 3, char: '!' });
+                    if (loc === "beijing") blips.push({ x: 53, y: 5, char: '!' });
+                    if (loc === "taiwan" || loc === "taipei") blips.push({ x: 55, y: 7, char: '!' });
+                    if (loc === "israel" || loc === "gaza" || loc === "middle east" || loc === "iran" || loc === "tehran") {
+                        blips.push({ x: 35, y: 9, char: '!' });
+                    }
+                });
+
+                blips.forEach(b => {
+                    if (renderRows[b.y] && renderRows[b.y][b.x]) {
+                        renderRows[b.y][b.x] = b.char;
+                    }
+                });
+
+                const now = new Date();
+                const zuluTimeStr = now.toISOString().split('T')[1].slice(0, 8) + 'Z';
+                const zuluDateStr = now.toISOString().split('T')[0];
+
+                await typeText(`ZULU TIME: ${zuluDateStr} // ${zuluTimeStr} (UTC)`);
+                await typeText(`LATEST AUDIT RESOURCE: ${latestLogName.toUpperCase()}`, 10, "dim");
+                await new Promise(r => setTimeout(r, 400));
+                outputDiv.appendChild(document.createElement('br'));
+
+                for (const rowChars of renderRows) {
+                    const rowText = rowChars.join('');
+                    await typeText(rowText, 5, "green");
+                }
+
+                outputDiv.appendChild(document.createElement('br'));
+                await typeText("📡 [RADAR BEACON ACTIVE - SWEEP COMPLETE]");
+                
+                if (uniqueDetected.length > 0) {
+                    await typeText("⚡ GEOPOLITICAL ANOMALY SIGNALS ACTIVE:");
+                    const locLabels = {
+                        "washington": "Washington DC (USA)",
+                        "kyiv": "Kyiv Combat Zone (UKR)",
+                        "kiev": "Kyiv Combat Zone (UKR)",
+                        "ukraine": "Kyiv Combat Zone (UKR)",
+                        "moscow": "Moscow Command Center (RUS)",
+                        "beijing": "Beijing Strategic Zone (PRC)",
+                        "taiwan": "Taipei Straits (Taiwan)",
+                        "taipei": "Taipei Straits (Taiwan)",
+                        "israel": "Tel Aviv / Gaza (Middle East)",
+                        "gaza": "Tel Aviv / Gaza (Middle East)",
+                        "middle east": "Tel Aviv / Gaza (Middle East)",
+                        "iran": "Tehran (Iran)",
+                        "tehran": "Tehran (Iran)"
+                    };
+                    const printed = new Set();
+                    for (const loc of uniqueDetected) {
+                        const label = locLabels[loc] || loc.toUpperCase();
+                        if (!printed.has(label)) {
+                            await typeText(`   [!] POSITION DETECTED: ${label} [ACTIVE RADAR REFLECTION]`);
+                            printed.add(label);
+                        }
+                    }
+                } else {
+                    await typeText(">> NO GEOPOLITICAL BLIPS RECORDED IN THE LATEST AUDIT CYCLE.", 15, "dim");
+                }
             }
         };
 
