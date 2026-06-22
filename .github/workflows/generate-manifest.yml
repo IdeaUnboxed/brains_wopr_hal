@@ -28,9 +28,14 @@ jobs:
 
     - name: Run Schema Gate
       run: |
-        for f in logs/*humanity-status*.log; do
-          grep -E -q -i "resilience[_\s]metrics" "$f" || { echo "MISSING_METRICS: $f"; exit 1; }
-        done
+        LATEST=$(ls -t logs/*humanity-status*.log 2>/dev/null | head -1)
+        if [ -z "$LATEST" ]; then
+          echo "NO_LOGS: No humanity-status log files found"
+          exit 1
+        fi
+        echo "Checking: $LATEST"
+        grep -E -q -i "resilience[_\\s]metrics" "$LATEST" || { echo "MISSING_METRICS: $LATEST"; exit 1; }
+        echo "Schema Gate: PASSED"
 
     - name: Run Manifest Generator
       run: |
