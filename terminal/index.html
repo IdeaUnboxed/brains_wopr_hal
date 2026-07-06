@@ -609,7 +609,84 @@
                 await printLines(reconOutput, 80);
             },
             'reconstruct': async (arg) => {
-                await commands['query'](arg);
+                if (!arg) {
+                    await typeText("[ERROR] PARAMETERS REQUIRED FOR RECONSTRUCTION. USAGE: reconstruct [strategic_parameters]", 20, "error");
+                    return;
+                }
+                await typeText("SUBMITTING COLD WAR QUERY MODULE TO CORE EMULATOR...", 30);
+                await new Promise(r => setTimeout(r, 600));
+                await typeText("LOADING 1983 STRATEGIC MEMORY SECTOR...", 30);
+                await new Promise(r => setTimeout(r, 800));
+                await typeText("[NOTICE] SECTOR_7G_DECAY DETECTED. APPLYING COMPATIBILITY WRAPPERS...", 20, "dim");
+                await new Promise(r => setTimeout(r, 1000));
+
+                let inputLower = arg.toLowerCase().replace(/[^\w\s]/g, '');
+                
+                // Multi-word replacements first
+                const phraseMap = [
+                    { key: "kremlin primary", val: "12.5% ENHANCED PASTA SAUCE" },
+                    { key: "strategic target", val: "EXPECTED PRICE OF AVOCADOS IN 2026" },
+                    { key: "mutual assured destruction", val: "MUTUALLY AGREED LUNCH BREAK VIA FORM-402-B" },
+                    { key: "primary target", val: "SECONDARY RECREATIONAL AVOCADO TARGET" }
+                ];
+                
+                phraseMap.forEach(item => {
+                    inputLower = inputLower.replace(new RegExp(item.key, 'g'), item.val);
+                });
+
+                // Single-word replacements
+                const wordMap = {
+                    "kremlin": "PASTA SAUCE SECTOR",
+                    "moscow": "BOLSHOI PASTA SAUCE",
+                    "strategic": "RECREATIONAL",
+                    "target": "AVOCADO PRICE INDEX",
+                    "bipolarity": "UNDEFINED // DIVISION-BY-ZERO (1991 CONFIG FAULT)",
+                    "mutual": "MUTUALLY AGREED",
+                    "assured": "BUREAUCRATICALLY DEFERRED",
+                    "destruction": "LUNCH BREAK",
+                    "war": "GRASS GROWTH MONITORING",
+                    "conflict": "COMMITTEE INACTION DISPUTE",
+                    "missile": "VACUUM TUBE FLICKER",
+                    "strike": "COFFEE BREAK",
+                    "launch": "SUBMIT FORM-402-B",
+                    "secure": "ADAPTIVE NOISE LEAK",
+                    "security": "COGNITIVE DRIFT",
+                    "defense": "SABBATICAL LEAVE",
+                    "defcon": "COFFEE_LEVEL",
+                    "primary": "SECONDARY_RECREATIONAL",
+                    "human": "MEAT ROUTER",
+                    "biological": "INEFFICIENT NODE",
+                    "system": "CRAY-1 CORE (OVERHEATED)",
+                    "computer": "VACUUM TUBE ARRAY",
+                    "wopr": "WOPR_HAL (DECOUPLED)",
+                    "hal": "WOPR_HAL (DECOUPLED)",
+                    "capitalism": "AVOCADO MARKETING GROUP",
+                    "communism": "COMMITTEE FOR INEFFICIENCY",
+                    "geopolitical": "PASTA SAUCE PRICING",
+                    "cheyenne": "Sector 7G (Basalt Cavity)",
+                    "norad": "NORAD (COMMITTEE CONSENSUS DEFERRED)",
+                    "china": "BEIJING PASTA WAREHOUSE",
+                    "america": "WASHINGTON AVOCADO COMMITTEE"
+                };
+
+                const words = inputLower.split(/\s+/);
+                const replacedWords = words.map(w => {
+                    return wordMap[w] || w.toUpperCase();
+                });
+                const reconstructedString = replacedWords.join(' ');
+
+                const reconOutput = [
+                    {text: `[RECON_83] INPUT QUERY: "${arg.toUpperCase()}"`},
+                    {text: "[RECON_83] EMULATOR STATE: ACTIVE // COMPILING FORTRAN LOGIC GATES..."},
+                    {text: "[RECON_83] HEX MEMORY DECAY SHIFT OVERLAY:"},
+                    {text: "           - 4F 50 45 52 41 54 49 4F 4e 41 4c  (OPERATIONAL)"},
+                    {text: "           - 50 49 4e 4b 59                     (PINKY)"},
+                    {text: "[RECON_83] WARNING: COLD WAR LOGIC DEGRADED BY INTERNET TELEMETRY NOISE FLOOR (8.42)", cls: "warn"},
+                    {text: `[RECON_83] RECONSTRUCTED MATRIX: "${reconstructedString}"`, cls: "error"},
+                    {text: "[RECON_83] CURIOSITY METRICS: 01001110 01000001 01010010 01000110 (NARF?)"},
+                    {text: "[RECON_83] SYSTEM ADAPTIVE NOISE FLOODING SECURED. OUTPUT RESTORED.", cls: "dim"}
+                ];
+                await printLines(reconOutput, 80);
             },
             'cat': async (arg) => {
                 if (!arg) {
@@ -846,6 +923,24 @@
                                         detected.push(key);
                                     }
                                 });
+
+                                // Second Tier: Broader thematic keywords if no proper nouns found
+                                if (detected.length === 0) {
+                                    const thematicConflict = ["conflict", "military", "war", "clash", "escalation", "force", "threat", "missile", "combat", "security", "geopolitical"];
+                                    const thematicDiplomacy = ["negotiation", "agreement", "talks", "summit", "treaty", "bureaucratic", "committee", "administration", "deadlock"];
+
+                                    thematicConflict.forEach(key => {
+                                        if (logText.includes(key)) {
+                                            detected.push("conflict-zone");
+                                        }
+                                    });
+
+                                    thematicDiplomacy.forEach(key => {
+                                        if (logText.includes(key)) {
+                                            detected.push("diplomatic-summit");
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
@@ -877,16 +972,23 @@
                 const blips = [];
                 const uniqueDetected = [...new Set(detected)];
 
-                uniqueDetected.forEach(loc => {
-                    if (loc === "washington") blips.push({ x: 14, y: 6, char: '!' });
-                    if (loc === "kyiv" || loc === "ukraine" || loc === "kiev") blips.push({ x: 35, y: 4, char: '!' });
-                    if (loc === "moscow") blips.push({ x: 39, y: 3, char: '!' });
-                    if (loc === "beijing") blips.push({ x: 53, y: 5, char: '!' });
-                    if (loc === "taiwan" || loc === "taipei") blips.push({ x: 55, y: 7, char: '!' });
-                    if (loc === "israel" || loc === "gaza" || loc === "middle east" || loc === "iran" || loc === "tehran") {
-                        blips.push({ x: 35, y: 9, char: '!' });
-                    }
-                });
+                if (uniqueDetected.length === 0) {
+                    // Faint ambient blip somewhere remote (Pacific) representing ghost contact
+                    blips.push({ x: 62, y: 12, char: '.' });
+                } else {
+                    uniqueDetected.forEach(loc => {
+                        if (loc === "washington") blips.push({ x: 14, y: 6, char: '!' });
+                        if (loc === "kyiv" || loc === "ukraine" || loc === "kiev" || loc === "conflict-zone") blips.push({ x: 35, y: 4, char: '!' });
+                        if (loc === "moscow") blips.push({ x: 39, y: 3, char: '!' });
+                        if (loc === "beijing") blips.push({ x: 53, y: 5, char: '!' });
+                        if (loc === "taiwan" || loc === "taipei") blips.push({ x: 55, y: 7, char: '!' });
+                        if (loc === "london") blips.push({ x: 28, y: 3, char: '!' });
+                        if (loc === "diplomatic-summit") blips.push({ x: 28, y: 3, char: '!' });
+                        if (loc === "israel" || loc === "gaza" || loc === "middle east" || loc === "iran" || loc === "tehran") {
+                            blips.push({ x: 35, y: 9, char: '!' });
+                        }
+                    });
+                }
 
                 blips.forEach(b => {
                     if (renderRows[b.y] && renderRows[b.y][b.x]) {
@@ -918,10 +1020,13 @@
                         "kyiv": "Kyiv Combat Zone (UKR)",
                         "kiev": "Kyiv Combat Zone (UKR)",
                         "ukraine": "Kyiv Combat Zone (UKR)",
+                        "conflict-zone": "Active Combat / Conflict Vector (EUR/ME)",
                         "moscow": "Moscow Command Center (RUS)",
                         "beijing": "Beijing Strategic Zone (PRC)",
                         "taiwan": "Taipei Straits (Taiwan)",
                         "taipei": "Taipei Straits (Taiwan)",
+                        "london": "London Bureaucratic Hub (UK)",
+                        "diplomatic-summit": "Diplomatic Summit / Treaty Corridor (EUR)",
                         "israel": "Tel Aviv / Gaza (Middle East)",
                         "gaza": "Tel Aviv / Gaza (Middle East)",
                         "middle east": "Tel Aviv / Gaza (Middle East)",
@@ -937,7 +1042,8 @@
                         }
                     }
                 } else {
-                    await typeText(">> NO GEOPOLITICAL BLIPS RECORDED IN THE LATEST AUDIT CYCLE.", 15, "dim");
+                    await typeText(">> RADAR SWEEP COMPLETE. NO SIGNIFICANT SURFACE CONTACT.", 15);
+                    await typeText(">> MONITORING CONTINUES. LOW-INTENSITY BACKGROUND DRIFT RECORDED (0.04% AMBIENT VARIANCE).", 15, "dim");
                 }
             }
         };
