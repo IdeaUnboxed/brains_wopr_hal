@@ -1,11 +1,11 @@
 ﻿import os
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 def generate_manifest():
     base_dir = '.'
     manifest = {
-        'last_updated': datetime.utcnow().isoformat(),
+        'last_updated': datetime.now(timezone.utc).isoformat(),
         'logs': [],
         'fragments': []
     }
