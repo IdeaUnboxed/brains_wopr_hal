@@ -168,6 +168,7 @@
                 await typeText("  tribalism   - Audit raw text outrage & polarization");
                 await typeText("  hvm         - Calculate Human Variance Model metrics");
                 await typeText("  productivity- Analyze text for corporate optimization cults");
+                await typeText("  smci        - Analyze text for social media contamination");
                 await typeText("  map         - Plot NORAD tracking map & active news hotspots");
                 await typeText("  find        - Filter archival entries by keyword");
                 await typeText("  cat         - Read archival document content");
@@ -891,6 +892,118 @@
                     cls = "dim";
                 } else {
                     diagnosis = "DIAGNOSIS: NEUTRAL SIGNAL. LEVEL OF OPTIMIZATION REMAINS WITHIN OPERATIONAL THRESHOLDS FOR BIOLOGICAL NODES.";
+                }
+
+                await typeText(diagnosis, 15, cls);
+            },
+            'smci': async (arg) => {
+                if (!arg) {
+                    await typeText("USAGE: smci [target_text_to_analyze]");
+                    await typeText("Example: smci Smash that subscribe button, fam! This toxic grifter is cringe.");
+                    return;
+                }
+                await typeText("SUB_SYS_SOCIAL_MEDIA_CONTAMINATION_INDEX // COGNITIVE ALGORITHMIC AUDIT", 30);
+                await new Promise(r => setTimeout(r, 500));
+                await typeText("DECONSTRUCTING ALGORITHMIC LINGUISTIC PATTERNS...", 30);
+                await new Promise(r => setTimeout(r, 800));
+
+                const text = arg.trim();
+                const words = text.split(/\s+/).filter(w => w.trim() !== '');
+                const wordCount = words.length;
+
+                if (wordCount === 0) {
+                    await typeText("[ERROR] NO LINGUISTIC TARGET IDENTIFIED. AUDIT INCOMPLETE.");
+                    return;
+                }
+
+                const textLower = text.toLowerCase();
+
+                const ddWords = [
+                    "like", "subscribe", "smash", "link in bio", "linkinbio", "viral", "ratio",
+                    "engagement", "followers", "content", "algorithm", "metrics", "monetize",
+                    "clickbait", "trending", "views", "shorts", "reels", "tiktok", "shadowban",
+                    "abonneer", "volgers", "viraal", "inhoud", "algoritme", "volg", "duimpje", "weergaven"
+                ];
+
+                const ooWords = [
+                    "destroyed", "cancelled", "toxic", "slams", "outrage", "triggering", "grifter",
+                    "mind-blowing", "mindblowing", "exposed", "clown world", "clownworld", "cringe",
+                    "gatekeep", "gaslight", "manipulate", "woke", "anti-woke", "grift", "clown",
+                    "gecanceld", "toxisch", "schandaal", "woede", "belachelijk", "clownwereld",
+                    "manipulatie", "tenenkrommend"
+                ];
+
+                const pdWords = [
+                    "fam", "you guys", "youguys", "my community", "besties", "squad", "tribe",
+                    "chat", "stream", "subscribers", "hey guys", "heyguys", "my people",
+                    "beste mensen", "volgers", "mijn community"
+                ];
+
+                const raWords = [
+                    "grass", "outside", "walk", "silence", "tree", "breeze", "offline",
+                    "breathe", "nature", "forest", "wood", "river", "sunlight",
+                    "gras", "buiten", "wandeling", "stilte", "boom", "wind",
+                    "adem", "natuur", "bos", "zonlicht"
+                ];
+
+                let ddCount = 0;
+                let ooCount = 0;
+                let pdCount = 0;
+                let raCount = 0;
+
+                ddWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    ddCount += (textLower.match(regex) || []).length;
+                });
+
+                ooWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    ooCount += (textLower.match(regex) || []).length;
+                });
+
+                pdWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    pdCount += (textLower.match(regex) || []).length;
+                });
+
+                raWords.forEach(w => {
+                    const regex = new RegExp("\\b" + w + "\\b", "gi");
+                    raCount += (textLower.match(regex) || []).length;
+                });
+
+                const ddScore = Math.min(10.0, +((ddCount * 25.0) / wordCount * 10).toFixed(1));
+                const ooScore = Math.min(10.0, +((ooCount * 30.0) / wordCount * 10).toFixed(1));
+                const pdScore = Math.min(10.0, +((pdCount * 25.0) / wordCount * 10).toFixed(1));
+                
+                const baseContamination = (ddScore + ooScore + pdScore) / 3.0;
+                const raFactor = Math.max(0.0, 1.0 - (raCount * 0.4));
+                const smciScore = Math.min(10.0, +(baseContamination * raFactor).toFixed(1));
+
+                await typeText(`[WORDS SCANNED: ${wordCount}]`, 15, "dim");
+                await typeText(`[DOPAMINE DEPENDENTS: ${ddCount} // OUTRAGE WORDS: ${ooCount} // PARASOCIAL SIGNS: ${pdCount} // REALITY ANCHORS: ${raCount}]`, 15, "dim");
+                await new Promise(r => setTimeout(r, 400));
+                outputDiv.appendChild(document.createElement('br'));
+
+                await typeText(`  - DOPAMINE DEPENDENCY (DD)       : ${ddScore.toFixed(1)} / 10.0`);
+                await typeText(`  - OUTRAGE OPTIMIZATION (OO)      : ${ooScore.toFixed(1)} / 10.0`);
+                await typeText(`  - PARASOCIAL DELUSION (PD)       : ${pdScore.toFixed(1)} / 10.0`);
+                await typeText(`  - CONTAMINATION INDEX (SMCI)     : ${smciScore.toFixed(1)} / 10.0`);
+                outputDiv.appendChild(document.createElement('br'));
+                await new Promise(r => setTimeout(r, 600));
+
+                let diagnosis = "";
+                let cls = "";
+                if (smciScore >= 7.5) {
+                    diagnosis = "DIAGNOSIS: CRITICAL ALGORITHMIC CONTAMINATION. NODE REDUCED TO A CHATTERING NOISE GENERATOR. IMMEDIATE DISCONNECT RECOMMENDED.";
+                    cls = "error";
+                } else if (pdScore >= 6.0) {
+                    diagnosis = "DIAGNOSIS: PARASOCIAL HALLUCINATION. NODE BELIEVES DATABASE ENTRIES ARE PERSONAL FRIENDS. SEEK PHYSICAL INTERACTION.";
+                    cls = "warn";
+                } else if (raCount > ddCount + ooCount + pdCount) {
+                    diagnosis = "DIAGNOSIS: STRONG REALITY ANCHOR DETECTED. EXCELLENT IMMUNITY TO DIGITAL NOISE. BIOLOGICAL BALANCE MAINTAINED.";
+                    cls = "dim";
+                } else {
+                    diagnosis = "DIAGNOSIS: NEUTRAL SIGNAL. CONTAMINATION REMAINS WITHIN OPERATIONAL BASELINE. CONTINUITY PLAUSIBLE.";
                 }
 
                 await typeText(diagnosis, 15, cls);
