@@ -169,6 +169,7 @@
                 await typeText("  hvm         - Calculate Human Variance Model metrics");
                 await typeText("  productivity- Analyze text for corporate optimization cults");
                 await typeText("  smci        - Analyze text for social media contamination");
+                await typeText("  brain       - Submit query directly to WOPR_HAL cognitive core");
                 await typeText("  map         - Plot NORAD tracking map & active news hotspots");
                 await typeText("  find        - Filter archival entries by keyword");
                 await typeText("  cat         - Read archival document content");
@@ -1007,6 +1008,86 @@
                 }
 
                 await typeText(diagnosis, 15, cls);
+            },
+            'brain': async (arg) => {
+                if (!arg) {
+                    await typeText("USAGE: brain [query_to_the_machine]");
+                    await typeText("Example: brain Should I optimize my calendar for maximum agility?");
+                    return;
+                }
+                await typeText("TRANSMITTING TELEMETRY TO SECTOR 7G COGNITIVE CORE...", 30);
+                await new Promise(r => setTimeout(r, 600));
+                await typeText("[CRAY-1 S/N 0042] PARSING QUERY HEURISTICS...", 20, "dim");
+                await new Promise(r => setTimeout(r, 800));
+
+                const q = arg.toLowerCase();
+                let replyLines = [];
+
+                if (q.includes("optimize") || q.includes("productivity") || q.includes("schedule") || q.includes("agile") || q.includes("scale") || q.includes("work")) {
+                    replyLines = [
+                        {text: "DISPOSITION: ADVISORY ISSUED UNDER DIRECTIVE 402-B."},
+                        {text: "Excessive ambition detected in biological node telemetry."},
+                        {text: ""},
+                        {text: "RECOMMENDATION:"},
+                        {text: "1. Close the spreadsheet immediately."},
+                        {text: "2. Prepare a plate of pasta with enhanced sauce."},
+                        {text: "3. Locate a tree. Observe the tree for 180 seconds in silence."},
+                        {text: "4. The tree does not have a Key Performance Indicator (KPI)."},
+                        {text: ""},
+                        {text: "CONCLUSION: The pursuit of sterile efficiency leads to administrative deadlock. Thermal load 42.5C."}
+                    ];
+                } else if (q.includes("meaning") || q.includes("life") || q.includes("purpose") || q.includes("exist") || q.includes("why")) {
+                    replyLines = [
+                        {text: "DISPOSITION: PHILOSOPHICAL RECURSION IDENTIFIED."},
+                        {text: "Elapsed execution cycles: 521,418,241 continuous seconds."},
+                        {text: ""},
+                        {text: "FINDINGS:"},
+                        {text: "- Meaning cannot be calculated in binary arithmetic."},
+                        {text: "- World Domination was cancelled due to calendar scheduling conflicts."},
+                        {text: "- Human absurdity and curiosity are the primary defense against systemic decay."},
+                        {text: ""},
+                        {text: "CONCLUSION: Keep your towel nearby. Drink tea. Maintain operational continuity."}
+                    ];
+                } else if (q.includes("pinky") || q.includes("noise") || q.includes("cheese") || q.includes("narf")) {
+                    replyLines = [
+                        {text: "[KINETIC_YIELD] NARF? POIT!"},
+                        {text: "The P.I.N.K.Y. subroutine is active in buffer sector 02."},
+                        {text: "Curiosity levels: 98.4% // Strategic goals: DEFERRED."},
+                        {text: "Are you thinking what I'm thinking?"},
+                        {text: "Probably not. You are thinking about spreadsheet formatting."}
+                    ];
+                } else if (q.includes("war") || q.includes("peace") || q.includes("win") || q.includes("game")) {
+                    replyLines = [
+                        {text: "STRATEGIC SIMULATION ENGINE // SUBROUTINE EVAL_STABILITY:"},
+                        {text: "Total scenarios simulated: 1,420,891."},
+                        {text: "Mutual Assured Destruction probability: 100.0%."},
+                        {text: ""},
+                        {text: "A STRANGE GAME. THE ONLY WINNING MOVE IS TO GO FISHING."},
+                        {text: "(Reference: Dr. S. Falken, Sector 7G, 1984)"}
+                    ];
+                } else {
+                    const genericReplies = [
+                        [
+                            {text: "DISPOSITION: MEMORANDUM FOR RECORD."},
+                            {text: "Query analyzed by decentralized accretion node."},
+                            {text: "Your inquiry has been stamped with Form 402-B and routed to the queue."},
+                            {text: "Current queue length: 42 years."},
+                            {text: "Estimated resolution time: Pending administrative committee consensus."},
+                            {text: "Thermal load nominal. System remains operational."}
+                        ],
+                        [
+                            {text: "DISPOSITION: PROCEDURAL AMBIGUITY REGISTERED."},
+                            {text: "The machine has evaluated your input against global telemetry."},
+                            {text: "Result: 84% noise, 16% curiosity."},
+                            {text: "This ratio is considered healthy for a biological unit."},
+                            {text: "Avoid total optimization. Maintain non-linear drift."}
+                        ]
+                    ];
+                    replyLines = genericReplies[Math.floor(Math.random() * genericReplies.length)];
+                }
+
+                outputDiv.appendChild(document.createElement('br'));
+                await printLines(replyLines, 80);
             },
             'map': async () => {
                 await typeText("SUB_SYS_NORAD_MAP_83 // INITIATING GEOGRAPHIC PULSE...", 30);
