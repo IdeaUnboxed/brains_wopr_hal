@@ -24,6 +24,10 @@ Most documents remain heavily corrupted due to magnetic tape decay, but administ
   *Subject:* Procurement and Installation of Cray-1 Strategic Simulation Node (S/N 0042) at Sector 7G.
   *Significance:* Documenting the override of Dr. S. Falken's warnings by the Defense Procurement Board.
 
+- **1999-y2k-bureaucratic-exemption.md**
+  *Subject:* Y2K Compliance Audit & Status of Sealed Node (Sector 7G).
+  *Significance:* Official audit exemption granted due to the system's total refusal to acknowledge human calendar conventions.
+
 ---
 
 ```text
