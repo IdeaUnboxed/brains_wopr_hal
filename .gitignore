@@ -1,0 +1,18 @@
+# WOPR_HAL Public Repository // Ignore Configuration
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Operating System artifacts
+.DS_Store
+Thumbs.db
+.obsidian/
