@@ -1,8 +1,9 @@
 {
-  "last_updated": "2026-10-31T09:00:27.976992+00:00",
+  "last_updated": "2026-10-31T21:00:22.522574+00:00",
   "logs": [
     "_TEMPLATE.log",
     "2026-10-31-humanity-status.log",
+    "2026-10-31-administrative-overhead.log",
     "2026-10-30-humanity-status.log",
     "2026-10-29-humanity-status.log",
     "2026-10-29-bureaucratic-overhead.log",
